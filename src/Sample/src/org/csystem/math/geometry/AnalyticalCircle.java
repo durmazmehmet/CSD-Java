@@ -5,12 +5,22 @@ public class AnalyticalCircle extends Circle {
 
     public AnalyticalCircle()
     {
-        this(0);
+        this(0, 0, 0);
     }
 
-    public AnalyticalCircle(double radius)
+    public AnalyticalCircle(Point center)
     {
-        this(radius, 0, 0);
+        this(0, center);
+    }
+
+    public AnalyticalCircle(double r)
+    {
+        this(r, 0, 0);
+    }
+
+    public AnalyticalCircle(double r, Point center)
+    {
+        this(r, center.x, center.y);
     }
 
     public AnalyticalCircle(int x, int y)
@@ -18,9 +28,9 @@ public class AnalyticalCircle extends Circle {
         this(0, x, y);
     }
 
-    public AnalyticalCircle(double radius, int x, int y)
+    public AnalyticalCircle(double r, int x, int y)
     {
-        super(radius);
+        super(r);
         m_center = new Point(x, y);
     }
 
@@ -32,27 +42,29 @@ public class AnalyticalCircle extends Circle {
     {
         m_center.x = x;
     }
+
     public void setY(int y)
     {
         m_center.y = y;
     }
+
+    public void setCenter(Point p)
+    {
+        setCenter(p.x, p.y);
+    }
+
     public void setCenter(int x, int y)
     {
         setX(x);
         setY(y);
     }
 
-    public void setCenter(Point center)
-    {
-        setCenter(center.x, center.y);
-    }
-
-    public void offset(int dxy)
+    public void offset(int dxy) //delegate method
     {
         offset(dxy, dxy);
     }
 
-    public void offset(int dx, int dy)
+    public void offset(int dx, int dy) //delegate method
     {
         m_center.offset(dx, dy);
     }

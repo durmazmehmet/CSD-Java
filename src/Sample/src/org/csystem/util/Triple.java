@@ -1,11 +1,11 @@
 package org.csystem.util;
 
-public final class Triple <F, S, T> {
-    private final F m_first;
-    private final S m_second;
-    private final T m_third;
+public class Triple<F, S, T> {
+    private F m_first;
+    private S m_second;
+    private T m_third;
 
-    public static <F1, S1, T1> Triple<F1, S1, T1> create(F1 first, S1 second, T1 third)
+    public static <F, S, T> Triple<F, S, T> create(F first, S second, T third)
     {
         return new Triple<>(first, second, third);
     }
@@ -37,4 +37,3 @@ public final class Triple <F, S, T> {
         return String.format("(%s, %s, %s)", m_first, m_second, m_third);
     }
 }
-

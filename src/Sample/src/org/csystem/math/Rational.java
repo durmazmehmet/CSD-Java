@@ -1,6 +1,9 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    Rational sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math;
 
-public class Rational {
+public final class Rational {
     private int m_a, m_b;
 
     private static Rational add(int a1, int b1, int a2, int b2)
@@ -23,19 +26,33 @@ public class Rational {
         return mul(a1, b1, b2, a2);
     }
 
+
     private static void control(int a, int b)
     {
         if (b == 0) {
             if (a == 0)
-                throw new RationalException("Indefinite", RationalExceptionStatus.INDEFINITE);
+                throw new RationalException("Belirsiz", RationalExceptionStatus.INDEFINITE);
 
-            throw new RationalException("Undefined", RationalExceptionStatus.UNDEFINED);
+            throw new RationalException("Tanımsız", RationalExceptionStatus.UNDEFINED);
+        }
+    }
+
+    private void calibrateSigns(int a, int b)
+    {
+        m_a = a;
+        m_b = b;
+
+        if (m_b < 0) {
+            m_a = -m_a;
+            m_b = -m_b;
         }
     }
 
     private void simplify()
     {
-        int min = Math.min(Math.abs(m_a), m_b);
+        int a = Math.abs(m_a);
+
+        int min = a > m_b ? m_b : a;
 
         for (int i = min; i >= 2; --i)
             if (m_a % i == 0 && m_b % i == 0) {
@@ -43,14 +60,6 @@ public class Rational {
                 m_b /= i;
                 break;
             }
-    }
-
-    private void calibrateSign()
-    {
-        if (m_b < 0) {
-            m_a *= -1;
-            m_b *= -1;
-        }
     }
 
     private void set(int a, int b)
@@ -61,11 +70,8 @@ public class Rational {
             return;
         }
 
-        m_a = a;
-        m_b = b;
-
-        this.calibrateSign();
-        this.simplify();
+        calibrateSigns(a, b);
+        simplify();
     }
 
     public Rational()
@@ -85,21 +91,16 @@ public class Rational {
         set(a, b);
     }
 
-    public int getNumerator()
-    {
-        return m_a;
-    }
+    public int getNumerator() {return m_a;}
+    public int getDenominator() {return m_b;}
+    public double getRealValue() {return (double)m_a / m_b;}
 
     public void setNumerator(int a)
     {
         if (a == m_a)
             return;
-        this.set(a, m_b);
-    }
 
-    public int getDenominator()
-    {
-        return m_b;
+        set(a, m_b);
     }
 
     public void setDenominator(int b)
@@ -108,20 +109,10 @@ public class Rational {
             return;
 
         control(m_a, b);
-        this.set(m_a, b);
-    }
-
-    public double getRealValue()
-    {
-        return (double) m_a / m_b;
+        set(m_a, b);
     }
 
     //add methods
-    public static Rational add(int val, Rational r)
-    {
-        return add(val, 1, r.m_a, r.m_b);
-    }
-
     public Rational add(Rational r)
     {
         return add(m_a, m_b, r.m_a, r.m_b);
@@ -133,11 +124,6 @@ public class Rational {
     }
 
     //sub methods
-    public static Rational sub(int val, Rational r)
-    {
-        return sub(val, 1, r.m_a, r.m_b);
-    }
-
     public Rational sub(Rational r)
     {
         return sub(m_a, m_b, r.m_a, r.m_b);
@@ -149,11 +135,6 @@ public class Rational {
     }
 
     //mul methods
-    public static Rational mul(int val, Rational r)
-    {
-        return mul(val, 1, r.m_a, r.m_b);
-    }
-
     public Rational mul(Rational r)
     {
         return mul(m_a, m_b, r.m_a, r.m_b);
@@ -164,13 +145,7 @@ public class Rational {
         return mul(m_a, m_b, val, 1);
     }
 
-
     //div methods
-    public static Rational div(int val, Rational r)
-    {
-        return div(val, 1, r.m_a, r.m_b);
-    }
-
     public Rational div(Rational r)
     {
         return div(m_a, m_b, r.m_a, r.m_b);
@@ -184,17 +159,29 @@ public class Rational {
     //inc method
     public void inc()
     {
-        m_a += m_b;
+        inc(1);
+    }
+
+    public void inc(int val)
+    {
+        m_a += m_b * val;
+        simplify();
     }
 
     //dec method
     public void dec()
     {
-        m_a -= m_b;
+        dec(1);
     }
+
+    public void dec(int val)
+    {
+        inc(-val);
+    }
+
 
     public String toString()
     {
-        return String.format("%d / %d = %f", m_a, m_b, this.getRealValue());
+        return String.format("%d / %d = %f", m_a, m_b, getRealValue());
     }
 }

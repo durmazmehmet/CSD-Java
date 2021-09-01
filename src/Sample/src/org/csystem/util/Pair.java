@@ -4,7 +4,7 @@ public final class Pair<F, S> {
     private final F m_first;
     private final S m_second;
 
-    public static <F1, S1> Pair<F1, S1> create(F1 first, S1 second)
+    public static <F, S> Pair<F, S> create(F first, S second)
     {
         return new Pair<>(first, second);
     }

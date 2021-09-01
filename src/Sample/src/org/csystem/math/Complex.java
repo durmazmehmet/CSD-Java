@@ -1,19 +1,31 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    Complex sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math;
 
-import static java.lang.Math.sqrt;
-
-public class Complex {
-	private static Complex add(double a1, double b1, double a2, double b2)
-	{
-		return new Complex(a1 + a2, b1 + b2);
-	}
-
-	private static Complex sub(double a1, double b1, double a2, double b2)
-	{
-		return add(a1, b1, -a2, -b2);
-	}
-
+public final class Complex {
 	public double re, im;
+		
+	private static Complex add(double re1, double im1, double re2, double im2)
+	{
+		return new Complex(re1 + re2, im1 + im2);	
+	}
+	
+	private static Complex subtract(double re1, double im1, double re2, double im2)
+	{
+		return add(re1, im1, -re2, -im2);
+	}
+	
+	private static Complex multiply(double re1, double im1, double re2, double im2)
+	{
+		return new Complex(re1 * re2 - im1 * im2, re1 * im2 + im1 * re2);
+	}
+	
+	private static Complex devide(double re1, double im1, double re2, double im2)
+	{
+		//TODO: Do your homework
+		return multiply(re1, im1, re2, im2);
+	}
 	
 	public Complex()
 	{}
@@ -31,75 +43,71 @@ public class Complex {
 	
 	public Complex getConjugate()
 	{
-		return new Complex(re, -im);
+		return new Complex(re, -im);		
 	}
 	
 	public double getNorm()
 	{
-		return sqrt(re * re + im * im);
+		return Math.sqrt(re * re + im * im);
 	}
 	
-	public static Complex add(double val, Complex z)
+	public void dec()
 	{
-		return add(val, 0, z.re, z.im);				
-	}	
-	
-	public Complex add(double val)
-	{
-		return add(re, im, val, 0);
-	}
-	
-	public Complex add(Complex z)
-	{
-		return add(re, im, z.re, z.im);		
-	}
-	
-	public static Complex sub(double val, Complex z)
-	{
-		return sub(val, 0, z.re, z.im);				
-	}	
-	
-	public Complex sub(double val)
-	{
-		return sub(re, im, val, 0);
-	}
-	
-	public Complex sub(Complex z)
-	{
-		return sub(re, im, z.re, z.im);		
+		--re;
 	}
 	
 	public void inc()
 	{
-		this.inc(1);
+		++re;
 	}
 	
-	public void inc(int val)
+	public Complex add(Complex z)
 	{
-		re += val;
+		return add(re, im, z.re, z.im);				
 	}
 	
-	public Complex incremented()
+	public Complex add(double a, double b)
 	{
-		return new Complex(re + 1, im);
+		return add(re, im, a, b);
+	}
+	
+	public Complex add(double a)
+	{
+		return add(a, 0);
 	}	
 	
-	public void dec(int val)
+	public Complex subtract(Complex z)
 	{
-		this.inc(-val);
-	}
-	public void dec()
-	{
-		this.dec(1);
+		return subtract(re, im, z.re, z.im);				
 	}
 	
-	public Complex decremented()
+	public Complex subtract(double a, double b)
 	{
-		return new Complex(re - 1, im);
+		return subtract(re, im, a, b);
 	}
-
+	
+	public Complex subtract(double a)
+	{
+		return subtract(a, 0);
+	}	
+	
+	public Complex multiply(Complex z)
+	{
+		return multiply(re, im, z.re, z.im);				
+	}
+	
+	public Complex multiply(double a, double b)
+	{
+		return multiply(re, im, a, b);
+	}
+	
+	public Complex multiply(double a)
+	{
+		return multiply(a, 0);
+	}
+	
 	public String toString()
 	{
-		return String.format("|%.2f + i*%.2f|=%.2f", re, im, this.getNorm());
+		return String.format("|%.2f + %.2fi| = %f", re, im, getNorm());
 	}
 }

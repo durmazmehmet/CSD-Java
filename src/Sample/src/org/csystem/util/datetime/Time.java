@@ -1,9 +1,12 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    Time sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util.datetime;
 
 import java.util.Calendar;
 import java.util.Random;
 
-public class Time {
+public final class Time {
     private int m_hour, m_minute, m_second, m_millisecond;
 
     private static boolean isValidForTime(int hour, int minute, int second, int millisecond)
@@ -12,64 +15,34 @@ public class Time {
                 && isValidForSecond(second) && isValidForMillisecond(millisecond);
     }
 
-    private static boolean isValidForHour(int hour)
+    private static boolean isValidForHour(int val)
     {
-        return isValidForBounds(hour, 23);
+        return isValidForBounds(val, 0, 23);
     }
 
-    private static boolean isValidForMinute(int minute)
+    private static boolean isValidForMinute(int val)
     {
-        return isValidForBounds(minute, 59);
+        return isValidForBounds(val, 0, 59);
     }
 
-    private static boolean isValidForSecond(int second)
+    private static boolean isValidForSecond(int val)
     {
-        return isValidForBounds(second, 59);
+        return isValidForBounds(val, 0, 59);
     }
 
-    private static boolean isValidForMillisecond(int millisecond)
+    private static boolean isValidForMillisecond(int val)
     {
-        return isValidForBounds(millisecond, 999);
+        return isValidForBounds(val, 0, 999);
     }
 
-    private static boolean isValidForBounds(int val, int max)
+    private static boolean isValidForBounds(int val, int min, int max) //[min, max]
     {
-        return 0 <= val && val <= max;
+        return min <= val && val <= max;
     }
 
     private static void doWorkForException(String msg)
     {
-        throw new DateTimeException(msg);
-    }
-
-    private static void controlForTime(int hour, int minute, int second, int millisecond)
-    {
-        if (!isValidForTime(hour, minute, second, millisecond))
-            doWorkForException("Invalid time");
-    }
-
-    private static void controlForHour(int hour)
-    {
-        if (!isValidForHour(hour))
-            doWorkForException("Invalid Hour");
-    }
-
-    private static void controlForMinute(int minute)
-    {
-        if (!isValidForMinute(minute))
-            doWorkForException("Invalid Minute");
-    }
-
-    private static void controlForSecond(int second)
-    {
-        if (!isValidForSecond(second))
-            doWorkForException("Invalid Second");
-    }
-
-    private static void controlForMillisecond(int millisecond)
-    {
-        if (!isValidForMillisecond(millisecond))
-            doWorkForException("Invalid Millisecond");
+       throw new DateTimeException(msg);
     }
 
     public static Time randomTime()
@@ -79,25 +52,21 @@ public class Time {
 
     public static Time randomTime(Random r)
     {
-        return new Time(r.nextInt(24), r.nextInt(60), r.nextInt(60), r.nextInt(1000));
-    }
+        int hour = r.nextInt(24);
+        int minute = r.nextInt(60);
+        int second = r.nextInt(60);
+        int millisecond = r.nextInt(1000);
 
-    //...
-
-    void setTime(Time time)
-    {
-        m_hour = time.m_hour;
-        m_minute = time.m_minute;
-        m_second = time.m_second;
-        m_millisecond = time.m_millisecond;
+        return new Time(hour, minute, second, millisecond);
     }
 
     Time(Time time)
     {
-        setTime(time);
+        this.setTime(time.m_hour, time.m_minute, time.m_second, time.m_millisecond);
     }
 
-    public Time() //Çağrıldığında sistemin zamanını alır
+
+    public Time() // O anki zamanı sistemden alıyor
     {
         Calendar now = Calendar.getInstance();
 
@@ -119,63 +88,78 @@ public class Time {
 
     public Time(int hour, int minute, int second, int millisecond)
     {
-        controlForTime(hour, minute, second, millisecond);
-        m_hour = hour;
-        m_minute = minute;
-        m_second = second;
-        m_millisecond = millisecond;
+        setTime(hour, minute, second, millisecond);
     }
 
     public int getHour() {return m_hour;}
+    public int getMinute() {return m_minute;}
+    public int getSecond() {return m_second;}
+    public int getMillisecond() {return m_millisecond;}
 
     public void setHour(int hour)
     {
         if (hour == m_hour)
             return;
 
-        controlForHour(hour);
+        if (!isValidForHour(hour))
+            doWorkForException("Invalid hour");
+
         m_hour = hour;
     }
 
-    public int getMinute() {return m_minute;}
     public void setMinute(int minute)
     {
         if (minute == m_minute)
             return;
 
-        controlForMinute(minute);
+        if (!isValidForMinute(minute))
+            doWorkForException("Invalid minute");
+
         m_minute = minute;
     }
 
-    public int getSecond() {return m_second;}
     public void setSecond(int second)
     {
         if (second == m_second)
             return;
 
-        controlForSecond(second);
+        if (!isValidForSecond(second))
+            doWorkForException("Invalid second");
+
         m_second = second;
     }
-
-    public int getMillisecond() {return m_millisecond;}
 
     public void setMillisecond(int millisecond)
     {
         if (millisecond == m_millisecond)
             return;
 
-        controlForMillisecond(millisecond);
+        if (!isValidForMillisecond(millisecond))
+            doWorkForException("Invalid millisecond");
+
         m_millisecond = millisecond;
     }
 
-    public String toString()
+
+    public void setTime(int hour, int minute, int second, int millisecond)
     {
-        return String.format("%s:%02d", toShortTimeString(), m_second);
+        if (!isValidForTime(hour, minute, second, millisecond))
+            doWorkForException("Invalid Time");
+
+        m_hour = hour;
+        m_minute = minute;
+        m_second = second;
+        m_millisecond = millisecond;
     }
 
     public String toLongTimeString()
     {
         return String.format("%s.%03d", toString(), m_millisecond);
+    }
+
+    public String toString()
+    {
+        return String.format("%s:%02d", toShortTimeString(), m_second);
     }
 
     public String toShortTimeString()

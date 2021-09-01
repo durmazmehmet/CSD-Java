@@ -1,13 +1,19 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    IntNumber sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
-public class IntNumber {
+public final class IntNumber {
+    private static final IntNumber [] CACHE = new IntNumber[256];
     private final int m_val;
-    private static final IntNumber [] CACHE = new IntNumber[256]; //[-128, 127]
 
     private IntNumber(int val)
     {
         m_val = val;
     }
+
+    public static final IntNumber ONE = valueOf(1);
+    public static final IntNumber ZERO = valueOf(0);
 
     public static IntNumber valueOf(int val)
     {
@@ -20,6 +26,25 @@ public class IntNumber {
         return CACHE[val + 128];
     }
 
+    public IntNumber add(int val)
+    {
+        return valueOf(m_val + val);
+    }
+
+    public IntNumber add(IntNumber n)
+    {
+        return add(n.m_val);
+    }
+
+    public IntNumber sub(int val)
+    {
+        return add(-val);
+    }
+
+    public IntNumber sub(IntNumber n)
+    {
+        return sub(n.m_val);
+    }
     public int getVal() {return m_val;}
 
     public String toString()

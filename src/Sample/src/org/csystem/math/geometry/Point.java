@@ -1,3 +1,7 @@
+/*----------------------------------------------------------------------------------------------------------------------
+	Point sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
+
 package org.csystem.math.geometry;
 
 import static java.lang.Math.sqrt;
@@ -7,17 +11,16 @@ public class Point {
 
 	Point(Point p)
 	{
-		x = p.x;
-		y = p.y;
+		this(p.x, p.y);
 	}
 
 	public Point()
 	{}
-	
-	public Point(int x)
+
+	public Point(int a)
 	{
-		this(x, 0);
-	}	
+		this(a, 0);
+	}
 	
 	public Point(int x, int y)
 	{
@@ -25,24 +28,24 @@ public class Point {
 		this.y = y;
 	}
 	
-	public double distance()
+	public static double distance(int x1, int y1, int x2, int y2)
 	{
-		return this.distance(0, 0);
+		return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	}
 	
 	public double distance(Point p)
-	{		
-		return this.distance(p.x, p.y);
+	{
+		return distance(x, y, p.x, p.y);
 	}
 	
 	public double distance(int a, int b)
 	{
-		return sqrt((x - a) * (x - a) + (y - b) * (y - b));				
+		return distance(x, y, a, b);
 	}
 	
 	public void offset(int dxy)
 	{
-		this.offset(dxy, dxy);
+		offset(dxy, dxy); //Do not repeat yourself
 	}
 	
 	public void offset(int dx, int dy)
@@ -53,6 +56,6 @@ public class Point {
 	
 	public String toString()
 	{
-		return String.format("(%d, %d)", x, y);		
-	}
+		return String.format("(%d, %d)", x, y);
+	}	
 }

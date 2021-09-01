@@ -1,6 +1,4 @@
 package org.csystem.math.geometry;
-import static java.lang.Math.abs;
-import static java.lang.Math.PI;
 
 public class Circle {
     private double m_r;
@@ -13,13 +11,11 @@ public class Circle {
         setRadius(r);
     }
 
-    public double getRadius() {return m_r;}
-
-    public void setRadius(double r)
+    public final double getRadius() {return m_r;}
+    public final double getArea() {return Math.PI * m_r * m_r;}
+    public final double getCircumference() {return 2 * Math.PI * m_r;}
+    public final void setRadius(double r)
     {
-        m_r = abs(r);
+        m_r = Math.abs(r);
     }
-
-    public double getArea() {return PI * m_r * m_r; }
-    public double getCircumference() {return 2 * PI * m_r ;}
 }

@@ -1,3 +1,6 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    ArrayUtil sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
 import java.util.ArrayList;
@@ -6,14 +9,50 @@ import java.util.Random;
 public final class ArrayUtil {
     private ArrayUtil() {}
 
-    public static boolean canAdd(int [][] a, int [][] b)
+    public static int[][] addMatrices(int [][] a, int [][] b)
     {
-        return isMatrix(a) && isMatrix(b) && a.length == b.length && a[0].length == b[0].length;
+        if (!isMatrix(a) || !isMatrix(b) || a.length != b.length || a[0].length != b[0].length)
+            throw new IllegalArgumentException("Geçersiz matris(ler)");
+
+
+        int row = a.length;
+        int col = a[0].length;
+        int [][] m = new int[row][col];
+
+        for (int i = 0; i < row; ++i)
+            for (int j = 0; j < col; ++j)
+                m[i][j] = a[i][j] + b[i][j];
+
+        return m;
     }
 
     public static double average(int [] a)
     {
         return (double)sum(a) / a.length;
+    }
+
+    public static int [] copy(int [] src, int[]dest)
+    {
+        return copy(src, dest, src.length);
+    }
+
+    public static int [] copy(int [] src, int[]dest, int size)
+    {
+        for (int i = 0; i < size; ++i)
+            dest[i] = src[i];
+
+        return dest;
+    }
+
+    public static int copyIfLengthGreater(String [] src, String [] dest, int val)
+    {
+        int index = 0;
+
+        for (String s : src)
+            if (s.length() > val)
+                dest[index++] = s;
+
+        return index;
     }
 
     public static void display(int [] a)
@@ -23,23 +62,28 @@ public final class ArrayUtil {
 
     public static void display(int [] a, int n)
     {
-        String fmt = String.format("%%0%dd ", n);
+        display(a, n, true);
+    }
+
+    public static void display(int [] a, int n, boolean putZero)
+    {
+        String fmt = putZero ? String.format("%%0%dd ", n) : String.format("%%%dd ", n);
+
         for (int val : a)
             System.out.printf(fmt, val);
 
         System.out.println();
     }
 
-    public static void display(char [] a)
+    public static void display(String [] str)
     {
-        for (char ch : a)
-            System.out.println(ch);
+        display(str, str.length);
     }
 
-    public static void display(String [] s)
+    public static void display(String [] str, int n)
     {
-       for (String str : s)
-            System.out.println(str);
+        for (int i = 0; i < n; ++i)
+            System.out.println(str[i]);
     }
 
     public static void display(int [][] a)
@@ -49,43 +93,47 @@ public final class ArrayUtil {
 
     public static void display(int [][] a, int n)
     {
-        for (int [] array : a)
-            display(array, n);
+        display(a, n, true);
     }
 
-    public static void drawHistogram(int [] hist, int n, char ch)
+    public static void display(int [][] a, int n, boolean putZero)
     {
-        int maxValue = max(hist);
+        for (int [] array : a)
+            display(array, n, putZero);
+    }
 
-        for (int val : hist) {
-            int count =(int) Math.round(val * n / (double)maxValue);
+    public static void drawHistogram(int [] h, int n, char ch)
+    {
+        int maxVal = max(h);
 
-            while (count-- > 0)
+        for (int val : h) {
+            int count = Math.round(val * n / maxVal);
+
+            while (count -- > 0)
                 System.out.print(ch);
 
             System.out.println();
         }
     }
 
-    public static int[] getHistogramArray(int [] a, int n) //[0, n]
+    public static int [] getHistogramData(int [] a, int n) //[0, n]
     {
-        int [] histArray = new int[n + 1];
+        int [] hist = new int[n + 1];
 
         for (int val : a)
-            ++histArray[val];
+            ++hist[val];
 
-        return histArray;
+        return hist;
     }
 
     public static int [] getRandomArray(int n, int min, int max) //[min, max)
     {
         return getRandomArray(new Random(), n, min, max);
     }
-    public static int [] getRandomArray(Random r, int n, int min, int max)
-    {
-        if (r == null || n <= 0 || min >= max)
-            throw new IllegalArgumentException("Invalid arguments");
 
+
+    public static int [] getRandomArray(Random r, int n, int min, int max) //[min, max)
+    {
         int [] a = new int[n];
 
         for (int i = 0; i < n; ++i)
@@ -101,21 +149,20 @@ public final class ArrayUtil {
 
     public static int[][] getRandomMatrix(Random r, int m, int n, int min, int max) //[min, max)
     {
-        int [][] a = new int[m][n];
+        int [][] a = new int[m][];
 
         for (int i = 0; i < m; ++i)
-            for (int j = 0; j < n; ++j)
-                a[i][j] = r.nextInt(max - min) + min;
+            a[i] = getRandomArray(r, n, min, max);
 
         return a;
     }
 
-
-    public static int [][] getRandomSquareMatrix(int n, int min, int max)
+    public static int[][] getRandomSquareMatrix(int n, int min, int max) //[min, max)
     {
         return getRandomSquareMatrix(new Random(), n, min, max);
     }
-    public static int [][] getRandomSquareMatrix(Random r, int n, int min, int max)
+
+    public static int[][] getRandomSquareMatrix(Random r, int n, int min, int max) //[min, max)
     {
         return getRandomMatrix(r, n, n, min, max);
     }
@@ -125,12 +172,13 @@ public final class ArrayUtil {
         return a.length == 0;
     }
 
+
     public static boolean isMatrix(int [][] a)
     {
         int col = a[0].length;
 
         for (int i = 1; i < a.length; ++i)
-            if (col != a[i].length)
+            if (a[i].length != col)
                 return false;
 
         return true;
@@ -144,7 +192,6 @@ public final class ArrayUtil {
     public static String join(String [] s, char delim)
     {
         return join(s, delim + "");
-
     }
 
     public static String join(String [] s, String delim)
@@ -157,7 +204,6 @@ public final class ArrayUtil {
         return str.substring(0, str.length() - delim.length());
     }
 
-
     public static String join(ArrayList list, char delim)
     {
         return join(list, delim + "");
@@ -165,119 +211,102 @@ public final class ArrayUtil {
 
     public static String join(ArrayList list, String delim)
     {
-        if (list.isEmpty())
-            return "";
-
         String str = "";
 
-        for (Object o : list) {
-            String s = (String)o;
-
-            str += s + delim;
-        }
+        for (Object o : list)
+            str += o + delim;
 
         return str.substring(0, str.length() - delim.length());
     }
 
-    public static char [] makeUpper(char [] chars)
-    {
-        int len = chars.length;
-
-        for (int i = 0; i < len; ++i)
-            chars[i] = Character.toUpperCase(chars[i]);
-
-        return chars;
-    }
-
-    public static int min(int [] a)
-    {
-        int result = a[0];
-
-        int len = a.length;
-
-        for (int i = 1; i < len; ++i)
-            if (a[i] < result)
-                result = a[i];
-
-        return result;
-    }
-
     public static int max(int [] a)
     {
-        int result = a[0];
+        int maxVal = a[0];
 
-        int len = a.length;
+        for (int i = 1; i < a.length; ++i)
+            if (maxVal < a[i])
+                maxVal = a[i];
 
-        for (int i = 1; i < len; ++i)
-            if (a[i] > result)
-                result = a[i];
-
-        return result;
-    }
-
-    public static int min(int [][] a)
-    {
-        int result = Integer.MAX_VALUE;
-
-        for (int [] array : a) {
-            int minVal = min(array);
-            if (result > minVal)
-                result = minVal;
-        }
-
-        return result;
+        return maxVal;
     }
 
     public static int max(int [][] a)
     {
-        int result = Integer.MIN_VALUE;
+        int maxVal = Integer.MIN_VALUE;
 
-        for (int [] array : a) {
-            int maxVal = max(array);
-            if (result < maxVal)
-                result = maxVal;
-        }
+        for (int [] array : a)
+            for (int val : array)
+                if (maxVal < val)
+                    maxVal = val;
 
-        return result;
+        return maxVal;
     }
 
-    public static int [] resize(int [] a, int size)
+    public static int min(int [] a)
     {
-        if (size <= a.length)
-            return a;
+        int minVal = a[0];
 
-        int [] result = new int[size];
+        for (int i = 1; i < a.length; ++i)
+            if (minVal > a[i])
+                minVal = a[i];
 
-        for (int i = 0; i < a.length; ++i)
-            result[i] = a[i];
-
-        return result;
+        return minVal;
     }
 
-    public static int [] reverse(int [] a)
+    public static int min(int [][] a)
     {
-        int len = a.length;
-        int halfLen = len / 2;
+        int minVal = Integer.MAX_VALUE;
+
+        for (int [] array : a)
+            for (int val : array)
+                if (minVal > val)
+                    minVal = val;
+
+        return minVal;
+    }
+
+    public static char [] reverse(char [] a)
+    {
+        int halfLen = a.length / 2;
 
         for (int i = 0; i < halfLen; ++i) {
-            int temp = a[i];
+            char temp = a[i];
 
-            a[i] = a[len - 1 - i];
-            a[len - 1 - i] = temp;
+            a[i] = a[a.length - 1 - i];
+            a[a.length - 1 - i] = temp;
         }
 
         return a;
     }
 
-    public static char [] reverse(char [] a)
+    public static int[] resizeActual(int [] a, int size)
     {
-        int len = a.length;
-        int halfLen = len / 2;
+        if (size == a.length)
+            return a;
+
+        if (size < a.length)
+            return copy(a, new int[size], size);
+
+        return copy(a, new int[size]);
+    }
+
+    public static int[] resize(int [] a, int size)
+    {
+        if (size <= a.length)
+            return a;
+
+        return copy(a, new int[size]);
+    }
+
+    public static int [] reverse(int [] a)
+    {
+        int halfLen = a.length / 2;
 
         for (int i = 0; i < halfLen; ++i) {
-            char temp = a[i];
-            a[i] = a[len - 1 - i];
-            a[len - 1 - i] = temp;
+            int temp = a[i];
+
+            a[i] = a[a.length - 1 - i];
+            a[a.length - 1 - i] = temp;
         }
 
         return a;
@@ -286,7 +315,6 @@ public final class ArrayUtil {
     public static int sum(int [] a)
     {
         int total = 0;
-        int len = a.length;
 
         for (int val : a)
             total += val;
@@ -296,40 +324,23 @@ public final class ArrayUtil {
 
     public static int sumDiagonal(int [][] a)
     {
-        int sum = 0;
+        if (!isSquareMatrix(a))
+            throw new IllegalArgumentException("Kare matris gereklidir");
+
+        int total = 0;
+
         for (int i = 0; i < a.length; ++i)
-            sum += a[i][i];
+            total += a[i][i];
 
-        return sum;
-    }
-
-    public static int [][] sumMatrices(int [][] a, int [][] b)
-    {
-        if (!canAdd(a, b)) {
-            System.out.println("Can not add matrices");
-            System.exit(-1); //exception konusuna kadar sabredin
-        }
-
-        int row = a.length;
-        int col = a[0].length;
-
-        int [][] sum = new int[row][col];
-
-        for (int i = 0; i < row; ++i)
-            for (int j = 0; j < col; ++j)
-                sum[i][j] = a[i][j] + b[i][j];
-
-        return sum;
+        return total;
     }
 
     public static int [][] transpose(int [][] a)
     {
-        int row = a.length;
-        int col = a[0].length;
-        int [][] t = new int[col][row];
+        int [][] t = new int[a[0].length][a.length];
 
-        for (int i = 0; i < row; ++i)
-            for (int j = 0; j < col; ++j)
+        for (int i = 0; i < a.length; ++i)
+            for (int j = 0; j < a[i].length; ++j)
                 t[j][i] = a[i][j];
 
         return t;

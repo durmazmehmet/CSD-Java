@@ -1,43 +1,45 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    NumberUtil sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
 public final class NumberUtil {
 	private static int [] getDigits(long val, int n)
 	{
-		if (val == 0)
-			return new int[] {0};
-
 		val = Math.abs(val);
+		int count = val == 0 ? 1 : (int)(Math.log10(val) / n + 1);
+		int divisor = (int)Math.pow(10, n);
+		int [] digits = new int[count];
 
-		int [] digits = new int[(int)Math.log10(val) / n + 1];
-		int scale = (int)Math.pow(10, n);
-
-		for (int i = digits.length  - 1; val != 0; digits[i] = (int)(val % scale), val /= scale, --i)
-			;
+		for (int i = count - 1; i >= 0; --i) {
+			digits[i] = (int)(val % divisor);
+			val /= divisor;
+		}
 
 		return digits;
 	}
 
-	private static String numToStr3DigitsTR(int val)
+	private static String numToStrMax3DigitsTR(int n)
 	{
-		if (val == 0)
+		if (n == 0)
 			return "sıfır";
 
 		String [] ones = {"", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"};
 		String [] tens = {"", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"};
+		String str = n < 0 ? "eksi" : "";
 
-		String str = val >= 0 ? "" : "eksi";
+		n = Math.abs(n);
 
-		val = Math.abs(val);
-
-		int a = val / 100;
-		int b = val / 10 % 10;
-		int c = val % 10;
+		int a = n / 100;
+		int b = n / 10 % 10;
+		int c = n % 10;
 
 		if (a != 0) {
 			if (a != 1)
 				str += ones[a];
 			str += "yüz";
 		}
+
 		if (b != 0)
 			str += tens[b];
 
@@ -47,54 +49,19 @@ public final class NumberUtil {
 		return str;
 	}
 
-	private static int getArmstrongSum(int val)
-	{
-		int n = getDigitsCount(val);
-		int sum = 0;
-
-		while (val != 0) {
-			sum += pow(val % 10, n);
-			val /= 10;
-		}
-
-		return sum;
-	}
-
 	private NumberUtil() {}
-	
-	public static int digitsSum(int val)
-	{
-		int sum = 0;
-		
-		while (val != 0) {
-			sum += val % 10;			
-			val /= 10;
-		}
-		
-		return Math.abs(sum);		
-	}
 
-	public static int factorial(int n)
+	public static int factorial(int n) 
 	{
 		if (n < 0)
-			return -1;
+			return  -1;
 		
-		int result = 1;		
+		int result = 1;
 		
 		for (int i = 2; i <= n; ++i)
 			result *= i;
 		
-		return result;
-	}
-	
-	public static int [] getDigits(int val)
-	{
-		return getDigits((long)val);
-	}
-
-	public static int [] getDigitsInThrees(int val)
-	{
-		return getDigitsInThrees((long)val);
+		return result;		
 	}
 
 	public static int [] getDigits(long val)
@@ -107,72 +74,82 @@ public final class NumberUtil {
 		return getDigits(val, 3);
 	}
 	
-	public static int getDigitsCount(int val)
+	public static int getDigitsCount(int val) 
 	{
-		int count = 0;
-		
-		do {
-			++count;
-			val /= 10;
-		} while (val != 0);
-		
-		return count;
-		
+		return val == 0 ? 1 : (int)(Math.log10(Math.abs(val)) + 1);
 	}
 
+	public static int getDigitsSum(int val) 
+	{
+		int sum = 0;
+		
+		while (val != 0) {
+			sum += val % 10;
+			val /= 10;
+		}
+		
+		return Math.abs(sum);		
+	}
+	
 	public static int getFibonacciNumber(int n)
 	{
-		if (n < 1)
+		if (n <= 0)
 			return -1;
-
-		if (n == 1)
-			return 0;
-
-		if (n == 2)
-			return 1;
-
+		
+		if (n <= 2)
+			return n - 1;
+		
 		int prev1 = 0, prev2 = 1, result = 0;
-
+		
 		for (int i = 2; i < n; ++i) {
 			result = prev1 + prev2;
 			prev1 = prev2;
 			prev2 = result;
 		}
-
-		return result;
+		
+		return result;			 
 	}
-	public static int getPrime(int n)
+
+	public static int getPrime(int n) 
 	{
 		if (n <= 0)
 			return -1;
 		
-		int count = 0;
-		int val = 0;
+		int count = 0, val = 0;
 		
 		for (int i = 2; count < n; ++i)
 			if (isPrime(i)) {
 				++count;
 				val = i;
-			}		
+			}
 		
-		return val;				
+		return val;		
 	}
 
 	public static int [] getPrimes(int n)
 	{
-		if (n <= 0)
-			return new int[0];
-
 		int count = 0;
-		int val = 0;
-
-		int [] a = new int[n];
+		int [] primes = new int[n];
 
 		for (int i = 2; count < n; ++i)
-			if (isPrime(i))
-				a[count++] = i;
+			if (isPrime(i)) {
+				primes[count] = i;
+				++count;
+			}
 
-		return a;
+		return primes;
+	}
+	
+	public static int getReverse(int val)
+	{
+		int rev = 0;
+		
+		while (val != 0) {
+			rev = rev * 10 + val % 10;
+			val /= 10;
+		}
+		
+		return rev;
 	}
 	
 	public static boolean isArmstrong(int val)
@@ -180,25 +157,39 @@ public final class NumberUtil {
 		if (val < 0)
 			return false;
 		
-		return val == getArmstrongSum(val);		
+		int n = getDigitsCount(val);		
+		int temp = val;
+		int sum = 0;
+		
+		while (temp != 0) {
+			sum += pow(temp % 10, n);
+			temp /= 10;
+		}
+		
+		return sum == val;		
 	}
 	
-	public static boolean isEven(int val)
+	public static boolean isEven(int val) 
 	{
-		return val % 2 == 0;		
+		return val % 2 == 0;
 	}
 	
-	public static boolean isOdd(int val)
+	public static boolean isOdd(int val) 
 	{
 		return !isEven(val);
 	}
 	
 	public static boolean isPalindrome(int val)
 	{
-		return reverse(val) == val;		
+		return getReverse(val) == val;
 	}
 	
-	public static boolean isPrime(int val)
+	public static boolean isPositive(int val)
+	{
+		return val > 0;
+	}
+	
+	public static boolean isPrime(int val) 
 	{
 		if (val <= 1)
 			return false;
@@ -213,7 +204,7 @@ public final class NumberUtil {
 			return val == 5;
 		
 		if (val % 7 == 0)
-			return val == 7;
+			return val == 7;		
 		
 		for (int i = 11; i * i <= val; i += 2)
 			if (val % i == 0)
@@ -222,20 +213,20 @@ public final class NumberUtil {
 		return true;
 	}
 	
-	public static int max(int a, int b)
+	public static int min(int a, int b, int c)
 	{
-		return a > b ? a : b;
-	}
-	
-	public static int min(int a, int b)
-	{
-		return a > b ? b : a;
+		return (a < b) ? (a < c ? a : c) : (b < c ? b : c);
 	}
 
-	public static String numToStrTR(long val)
+	public static int max(int a, int b, int c)
 	{
-		//...
-		return numToStr3DigitsTR((int)val);
+		return (a > b) ? (a > c ? a : c) : (b > c ? b : c);
+	}
+
+	public static String numToStrTR(long n)
+	{
+		//TODO:Homework
+		return numToStrMax3DigitsTR((int)n);
 	}
 	
 	public static int pow(int a, int b)
@@ -248,17 +239,5 @@ public final class NumberUtil {
 			result *= a;
 		
 		return result;
-	}
-	
-	public static int reverse(int val)
-	{
-		int rev = 0;
-		
-		while (val != 0) {
-			rev = rev * 10 + val % 10;
-			val /= 10;
-		}		
-		
-		return rev;
 	}
 }

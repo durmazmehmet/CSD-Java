@@ -1,3 +1,6 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    RationalExceptionStatus sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math;
 
-public enum RationalExceptionStatus { INDEFINITE, UNDEFINED }
+public enum RationalExceptionStatus {UNDEFINED, INDEFINITE}

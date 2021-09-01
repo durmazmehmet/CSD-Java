@@ -1,15 +1,21 @@
 /*----------------------------------------------------------------------------------------------------------------------
-	Triple sınıfı ve test kodu
+	CSDArrayList sınıfı ve test kodu
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.app;
 
-import org.csystem.util.Triple;
+import org.csystem.util.Console;
+
+import java.util.Scanner;
 
 class App {
     public static void main(String [] args)
     {
-        Triple<Integer, String, Boolean> t = Triple.create(10, "ankara", false);
+        Scanner kb = new Scanner(System.in);
+        String s = "ankara";
+        String k = kb.nextLine();
 
-        System.out.println(t);
+        System.out.println(s.hashCode());
+        System.out.println(k.hashCode());
     }
 }
+
