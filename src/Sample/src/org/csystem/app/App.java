@@ -1,23 +1,27 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    abstract sınıf türünden bir nesne new operatörü ile yaratılamaz. new işlemi sınıf içerisinde de yapılamaz
+    Fraction sınıfı ve test kodu
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.app;
+
+import org.csystem.util.Console;
+import org.csystem.util.math.Fraction;
+import org.csystem.util.math.FractionException;
 
 class App {
     public static void main(String [] args)
     {
-        Sample s = new Sample(); //error
+        for (;;) {
+            try {
+                int a = Console.readInt("Pay değerini giriniz:");
+                int b = Console.readInt("Payda değerini giriniz:");
+                Fraction f = new Fraction(a, b);
 
-        s.foo();
+                System.out.println(f);
+            }
+            catch (FractionException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
     }
 }
 
-abstract class Sample {
-    public abstract void foo();
-    public abstract void tar();
-
-    public void bar()
-    {
-        Sample s = new Sample(); //error
-    }
-}
