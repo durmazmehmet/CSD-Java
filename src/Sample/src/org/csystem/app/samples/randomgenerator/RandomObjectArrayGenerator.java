@@ -13,33 +13,30 @@ public class RandomObjectArrayGenerator {
 
     private Object getRandomObject()
     {
-        int val = m_random.nextInt(7);
+        int n = m_random.nextInt(6);
 
         Object object;
 
-        switch (val) {
+        switch (n) {
             case 0:
-                object = StringUtil.getRandomTextTR(m_random.nextInt(15) + 1);
+                object = StringUtil.getRandomTextTR(m_random, m_random.nextInt(20) + 1);
                 break;
             case 1:
-                object = m_random.nextInt(255) - 128;
+                object = Date.of(m_random);
                 break;
             case 2:
-                object = Date.randomDate(m_random);
+                object = Time.of(m_random);
                 break;
             case 3:
-                object = Time.randomTime(m_random);
+                object = m_random.nextInt(255) - 128;
                 break;
             case 4:
-                object = m_random.nextDouble();
-                break;
-            case 5:
-                object = m_random.nextBoolean();
+                object = (char)(m_random.nextInt(26) + 'A');
                 break;
             default:
-                object = ArrayUtil.getRandomArray(m_random, 10, 0, 256);
-        }
+                object = ArrayUtil.generateRandomArray(m_random, 10, 0, 100);
 
+        }
         return object;
     }
 
@@ -60,3 +57,4 @@ public class RandomObjectArrayGenerator {
             m_objects[i] = getRandomObject();
     }
 }
+

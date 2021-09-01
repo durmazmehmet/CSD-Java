@@ -1,7 +1,7 @@
 package org.csystem.app.samples.parserapp;
 
-public class StringSource implements ISource {
-    private String m_str;
+public class StringSource extends Source {
+    private final String m_str;
     private int m_index;
 
     public StringSource(String str)

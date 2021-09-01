@@ -3,10 +3,9 @@
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public final class ArrayUtil {
+public class ArrayUtil {
     private static void bubbleSortAscending(int [] a)
     {
         for (int i = 0; i < a.length - 1; ++i)
@@ -22,6 +21,7 @@ public final class ArrayUtil {
                 if (a[k + 1] > a[k])
                     swap(a, k, k + 1);
     }
+
 
     private static void selectionSortAscending(int [] a)
     {
@@ -62,23 +62,12 @@ public final class ArrayUtil {
     }
 
     private ArrayUtil()
+    {}
+
+    public static void bubbleSort(int [] a)
     {
+        bubbleSortAscending(a);
     }
-
-    public static int [][] addMatrices(int [][] a, int [][] b)
-    {
-        if (isNotMatrix(a) || isNotMatrix(b) || a.length != b.length || a[0].length != b[0].length)
-            throw new IllegalArgumentException("Invalid matrices for add operation");
-
-        int [][] total = new int[a.length][a[0].length];
-
-        for (int i = 0; i < total.length; ++i)
-            for (int j = 0; j < total[i].length; ++j)
-                total[i][j] = a[i][j] + b[i][j];
-
-        return total;
-    }
-
 
     public static void bubbleSort(int [] a, boolean descending)
     {
@@ -88,9 +77,17 @@ public final class ArrayUtil {
             bubbleSortAscending(a);
     }
 
-    public static void bubbleSort(int [] a)
+    public static int [] copyOf(int [] a, int size)
     {
-        bubbleSort(a, false);
+        if (a.length >= size)
+            return a;
+
+        int [] result = new int[size];
+
+        for (int i = 0; i < a.length; ++i)
+            result[i] = a[i];
+
+        return result;
     }
 
     public static void display(int [] a)
@@ -98,36 +95,42 @@ public final class ArrayUtil {
         display(1, a);
     }
 
-    public static void display(int k, int [] a)
-    {
-        display(k, a.length, a);
-    }
-
-    public static void display(int k, int count, int [] a)
-    {
-        String fmt = String.format("%%0%dd ", k); //"%02d " -> k = 2
-
-        for (int i = 0; i < count; ++i)
-            System.out.printf(fmt, a[i]);
-
-        System.out.println();
-    }
-
-    public static void display(String [] strings)
-    {
-        for (String string : strings)
-            System.out.println(string);
-    }
-
     public static void display(int [][] a)
     {
         display(1, a);
     }
 
-    public static void display(int k, int [][] a)
+    public static void display(int n, int [] a)
+    {
+        display(' ', '\n', n, a);
+    }
+
+    public static void display(int n, int [][] a)
     {
         for (int [] array : a)
-            display(k, array);
+            display(n, array);
+    }
+
+    public static void display(char sep, char end, int [] a)
+    {
+        display(sep, end, 1, a);
+    }
+
+    public static void display(char sep, char end, int n, int [] a)
+    {
+        String fmt = String.format("%%0%dd%%c", n);
+
+        for (int val : a)
+            System.out.printf(fmt, val, sep); //n -> 2 -> "%02d%c"
+
+        System.out.print(end);
+    }
+
+
+    public static void display(String [] str)
+    {
+        for (String s : str)
+            System.out.println(s);
     }
 
     public static void drawHistogram(int [] data, int n, char ch)
@@ -135,47 +138,43 @@ public final class ArrayUtil {
         int maxVal = max(data);
 
         for (int val : data) {
-            int count  = (int)Math.floor(val * n / (double)maxVal);
+            int nVal = (int)Math.ceil(val * n / (double)maxVal);
 
-            while (count-- > 0)
+            while (nVal-- > 0)
                 System.out.print(ch);
 
             System.out.println();
         }
     }
 
-    public static int [] enlarge(int [] a, int newLength)
+    public static int [] getHistogramData(int [] a, int n) //[0, n]
     {
-        if (newLength <= a.length)
-            return a;
+        int [] counts = new int[n + 1];
 
-        int [] newArray = new int[newLength];
+        for (int val : a)
+            ++counts[val];
 
-        for (int i = 0; i < a.length; ++i)
-            newArray[i] = a[i];
-
-        return newArray;
+        return counts;
     }
 
-    public static void fillRandomArray(int [] a, int min, int max)
-    {
-        fillRandomArray(new Random(), a, min, max);
-    }
-
-    public static void fillRandomArray(Random r, int [] a, int min, int max)
+    public static void fillArrayRandom(Random r, int [] a, int min, int max)
     {
         for (int i = 0; i < a.length; ++i)
             a[i] = r.nextInt(max - min) + min;
     }
 
-    public static int[] getHistogramData(int [] a, int n) //[0, n]
+    public static void fillArrayRandom(int [] a, int min, int max)
     {
-        int [] histData = new int[n + 1];
+        fillArrayRandom(new Random(), a, min, max);
+    }
 
-        for (int val : a)
-            ++histData[val];
+    public static int [] getRandomArray(Random r, int n, int min, int max) //[min, max)
+    {
+        int [] a = new int[n];
 
-        return histData;
+        fillArrayRandom(r, a, min, max);
+
+        return a;
     }
 
     public static int [] getRandomArray(int n, int min, int max) //[min, max)
@@ -183,21 +182,7 @@ public final class ArrayUtil {
         return getRandomArray(new Random(), n, min, max);
     }
 
-    public static int [] getRandomArray(Random r, int n, int min, int max) //[min, max)
-    {
-        int [] a = new int[n];
-
-        fillRandomArray(r, a, min, max);
-
-        return a;
-    }
-
-    public static int[][] getRandomMatrix(int m, int n, int min, int max) //[min, max)
-    {
-        return getRandomMatrix(new Random(), m, n, min, max);
-    }
-
-    public static int[][] getRandomMatrix(Random r, int m, int n, int min, int max) //[min, max)
+    public static int [][] getRandomMatrix(Random r, int m, int n, int min, int max) //[min, max)
     {
         int [][] a = new int[m][];
 
@@ -207,30 +192,30 @@ public final class ArrayUtil {
         return a;
     }
 
-    public static int [][] getRandomSquareMatrix(int n, int min, int max)
+    public static int [][] getRandomMatrix(int m, int n, int min, int max) //[min, max)
     {
-        return getRandomSquareMatrix(new Random(), n, min, max);
+        return getRandomMatrix(new Random(), m, n, min, max);
     }
 
-    public static int [][] getRandomSquareMatrix(Random r, int n, int min, int max)
+    public static int [][] getRandomSquareMatrix(Random r, int n, int min, int max) //[min, max)
     {
         return getRandomMatrix(r, n, n, min, max);
     }
 
+    public static int [][] getRandomSquareMatrix(int n, int min, int max) //[min, max)
+    {
+        return getRandomSquareMatrix(new Random(), n, min, max);
+    }
+
     public static boolean isMatrix(int [][] a)
     {
-        int count = a[0].length;
+        int n = a[0].length;
 
         for (int i = 1; i < a.length; ++i)
-            if (a[i].length != count)
+            if (a[i].length != n)
                 return false;
 
         return true;
-    }
-
-    public static boolean isNotMatrix(int [][]a)
-    {
-        return !isMatrix(a);
     }
 
     public static boolean isSquareMatrix(int [][] a)
@@ -238,62 +223,24 @@ public final class ArrayUtil {
         return isMatrix(a) && a[0].length == a.length;
     }
 
-    public static boolean isNotSquareMatrix(int [][] a)
-    {
-        return !isSquareMatrix(a);
-    }
-
-
-    public static String join(ArrayList<String> list, char delimiter)
-    {
-        return join(list, delimiter + "");
-    }
-
-    public static String join(ArrayList<String> list, String delimiter)
-    {
-        String str = "";
-
-        for (String s : list)
-            str += s + delimiter;
-
-        return str.substring(0, str.length() - delimiter.length());
-    }
-
-    public static String join(String [] strings, char delimiter)
-    {
-        return join(strings, delimiter + "");
-    }
-
-    public static String join(String [] strings, String delimiter)
-    {
-        String str = "";
-
-        for (String s : strings)
-            str += s + delimiter;
-
-        return str.substring(0, str.length() - delimiter.length());
-    }
-
     public static int max(int [] a)
     {
-        int maxVal = a[0];
+        int result = a[0];
 
         for (int i = 1; i < a.length; ++i)
-            if (a[i] > maxVal)
-                maxVal = a[i];
+            result = Math.max(result, a[i]);
 
-        return maxVal;
+        return result;
     }
 
     public static int min(int [] a)
     {
-        int minVal = a[0];
+        int result = a[0];
 
         for (int i = 1; i < a.length; ++i)
-            if (a[i] < minVal)
-                minVal = a[i];
+            result = Math.min(result, a[i]);
 
-        return minVal;
+        return result;
     }
 
     public static int partition(int [] a, int threshold)
@@ -321,17 +268,17 @@ public final class ArrayUtil {
             swap(a, i, a.length - 1 - i);
     }
 
-    public static void reverse(char [] a)
+    public static void reverse(char [] chars)
     {
-        int halfLen = a.length / 2;
+        int halfLen = chars.length / 2;
 
         for (int i = 0; i < halfLen; ++i)
-            swap(a, i, a.length - 1 - i);
+            swap(chars, i, chars.length - 1 - i);
     }
 
     public static void selectionSort(int [] a)
     {
-        selectionSort(a, false);
+        selectionSortAscending(a);
     }
 
     public static void selectionSort(int [] a, boolean descending)
@@ -340,6 +287,25 @@ public final class ArrayUtil {
             selectionSortDescending(a);
         else
             selectionSortAscending(a);
+    }
+
+    public static void shuffle(int [] a, int n)
+    {
+        shuffle(new Random(), a, n);
+    }
+
+    public static void shuffle(Random r, int [] a, int n)
+    {
+        for (int i = 0; i < n; ++i) {
+            int firstIndex, secondIndex;
+
+            do {
+                firstIndex = r.nextInt(a.length);
+                secondIndex = r.nextInt(a.length);
+            } while (firstIndex == secondIndex);
+
+            swap(a, firstIndex, secondIndex);
+        }
     }
 
     public static int sum(int [] a)
@@ -356,9 +322,8 @@ public final class ArrayUtil {
     {
         int total = 0;
 
-        for (int i = 0; i < a.length; ++i)
-            for (int k = 0; k < a[i].length; ++k)
-                total += a[i][k];
+        for (int [] array : a)
+            total += sum(array);
 
         return total;
     }
@@ -373,15 +338,6 @@ public final class ArrayUtil {
         return total;
     }
 
-    public static void swap(int [] a, int i, int k)
-    {
-        int temp;
-
-        temp = a[i];
-        a[i] = a[k];
-        a[k] = temp;
-    }
-
     public static void swap(char [] a, int i, int k)
     {
         char temp;
@@ -391,15 +347,27 @@ public final class ArrayUtil {
         a[k] = temp;
     }
 
+    public static void swap(int [] a, int i, int k)
+    {
+        int temp;
+
+        temp = a[i];
+        a[i] = a[k];
+        a[k] = temp;
+    }
+
     public static int [][] transpose(int [][] a)
     {
-        int [][] t = new int[a[0].length][a.length];
+        int m = a.length;
+        int n = a[0].length;
+        int [][] t = new int[n][m];
 
-        for (int i = 0; i < t.length; ++i)
-            for (int j = 0; j < t[i].length; ++j)
-                t[i][j] = a[j][i];
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                t[j][i] = a[i][j];
 
         return t;
     }
 }
+
 

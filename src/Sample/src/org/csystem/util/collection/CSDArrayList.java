@@ -1,27 +1,38 @@
-public class CSDArrayList implements Cloneable {
+/*----------------------------------------------------------------------------------------------------------------------
+    CSDArrayList sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
+package org.csystem.util.collection;
+
+public class CSDArrayList {
     private static final int DEFAULT_CAPACITY = 10;
     private Object [] m_elems;
     private int m_index;
 
-    private static void copy(Object [] src, Object [] dest)
+    private static void doWorkForIllegalArgumentException(String message)
     {
-        for (int i = 0; i < src.length; ++i)
-            dest[i] = src[i];
+        System.out.println(message);
+        System.exit(-1); //exception işlemleri konusuna kadar sabredin
     }
 
-    private static void checkForBounds(int index, int bound, String msg)
+    private static void doWorkForIndexOutOfException(String message)
     {
-        if (index < 0 || index > bound)
-            throw new IndexOutOfBoundsException(msg);
+        System.out.println(message);
+        System.exit(-1); //exception işlemleri konusuna kadar sabredin
     }
 
-    private static void checkForCapacity(int capacity, String msg)
+    private void checkForIndex(int index)
+    {
+        if (index < 0 || index >= m_index)
+            doWorkForIndexOutOfException("Index Out of bounds");
+    }
+
+    private void checkCapacityValue(int capacity)
     {
         if (capacity < 0)
-            throw new IllegalArgumentException(msg);
+            doWorkForIllegalArgumentException("Capacity can not be negative");
     }
 
-    private void allocateCapacity(int capacity)
+    private void changeCapacity(int capacity)
     {
         Object [] temp = new Object[capacity];
 
@@ -33,95 +44,74 @@ public class CSDArrayList implements Cloneable {
 
     public CSDArrayList()
     {
-        this(DEFAULT_CAPACITY);
+        m_elems = new Object[DEFAULT_CAPACITY];
     }
 
     public CSDArrayList(int initialCapacity)
     {
-        checkForCapacity(initialCapacity, "ctor:Illegal Argument");
-        m_elems = new Object[initialCapacity == 0 ? DEFAULT_CAPACITY : initialCapacity];
-    }
-
-    public void add(int index, Object elem)
-    {
-        //TODO:
+        this.checkCapacityValue(initialCapacity);
+        m_elems = new Object[initialCapacity];
     }
 
     public boolean add(Object elem)
     {
-        if (m_elems.length == m_index)
-            this.allocateCapacity(m_elems.length * 2);
+        if (m_index == m_elems.length)
+            this.changeCapacity(m_elems.length == 0 ? 1 : m_elems.length * 2);
 
         m_elems[m_index++] = elem;
 
         return true;
     }
 
-    public int capacity() {return m_elems.length;}
+    public void add(int index, Object elem)
+    {
+        //...
+        if (m_index == m_elems.length)
+            this.changeCapacity(m_elems.length == 0 ? 1 : m_elems.length * 2);
+
+        //TODO:
+    }
+
+    public int capacity()
+    {
+        return m_elems.length;
+    }
 
     public void clear()
     {
-        for (int i = 0; i < m_index; ++i)
+        for (int i = 0; i < m_index; ++i) //Dikkat bu yapılmazsa bellek sızıntısı (memory leak) oluşabilir
             m_elems[i] = null;
 
         m_index = 0;
     }
 
-    public Object clone()
+    public void ensureCapacity(int minCapacity)
     {
-        CSDArrayList clone = new CSDArrayList(m_elems.length);
-
-        copy(m_elems, clone.m_elems);
-
-        clone.m_index = m_index;
-
-        return clone;
-    }
-
-    public void ensureCapacity(int capacity)
-    {
-        if (capacity <= m_elems.length)
+        if (minCapacity <= m_elems.length)
             return;
 
-        if (capacity < 2 * m_elems.length)
-            this.allocateCapacity(2 * m_elems.length);
-        else
-            this.allocateCapacity(capacity);
+        this.changeCapacity(Math.max(minCapacity, m_elems.length * 2));
     }
 
     public Object get(int index)
     {
-        checkForBounds(index, m_index - 1, "get:Index Out Of Bounds");
+        this.checkForIndex(index);
 
         return m_elems[index];
     }
 
-    public int indexOf(Object o)
-    {
-        if (o == null) {
-            for (int i = 0; i < m_index; ++i)
-                if (m_elems[i] == null)
-                    return i;
-        }
-        else {
-            for (int i = 0; i < m_index; ++i)
-                if (o.equals(m_elems[i]))
-                    return i;
-        }
-
-        return -1;
-    }
-
     public Object remove(int index)
     {
+        Object oldElem = m_elems[index];
+
         //TODO:
 
-        return null;
+        return oldElem;
     }
 
     public Object set(int index, Object elem)
     {
-        checkForBounds(index, m_index - 1, "set:Index Out Of Bounds");
+        this.checkForIndex(index);
         Object oldElem = m_elems[index];
 
         m_elems[index] = elem;
@@ -129,24 +119,26 @@ public class CSDArrayList implements Cloneable {
         return oldElem;
     }
 
-    public int size() {return m_index;}
-
-    public void trimToSize()
+    public int size()
     {
-        this.allocateCapacity(m_index == 0 ? DEFAULT_CAPACITY : m_index);
+        return m_index;
     }
 
     public String toString()
     {
-        String str = "[";
+        String str = "";
 
         for (int i = 0; i < m_index; ++i)
-            str += m_elems[i].toString() + ",";
+            str += m_elems[i] + ", ";
 
-        if (str.length() != 1)
-            str = str.substring(0, str.length() - 1);
+        if (!str.isEmpty())
+            str = str.substring(0, str.length() - ", ".length());
 
-        return str + "]";
+        return "[" + str + "]";
+    }
+
+    public void trimToSize()
+    {
+        this.changeCapacity(m_index);
     }
 }
-

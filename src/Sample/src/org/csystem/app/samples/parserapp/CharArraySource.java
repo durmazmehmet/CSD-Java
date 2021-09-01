@@ -1,7 +1,7 @@
 package org.csystem.app.samples.parserapp;
 
-public class CharArraySource implements ISource {
-    private char [] m_chars;
+public class CharArraySource extends Source {
+    private final char [] m_chars;
     private int m_index;
 
     public CharArraySource(String str)

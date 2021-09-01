@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7f4d8c7-9bdc-4f5f-bf13-4eea41abf3e3" name="Default Changelist" comment="" />
+    <list default="true" id="16698ff9-77fa-4dc3-9930-a2895ddac1e9" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,13 +10,23 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
-  <component name="ProjectId" id="1fDyCDpYC3L5fkFpfEXqmeSlTxw" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1nu5IMg301cxPkaGAIh0oUMzKIQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -26,28 +36,14 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../doc/Examples.txt" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../JavaApp1-Feb-2021/src/Projects/Sample" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="org.csystem.app.samples.devicesapp" />
-      <recent name="org.csystem.util.converter" />
-      <recent name="org.csystem.util" />
-      <recent name="org.csystem.app.test" />
-      <recent name="org.csystem.app.samples.games.cargameapp" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Karans\Dropbox\CSD\Kurslar\Java-May-2020\src\Sample\src\org\csystem\util\io" />
-      <recent name="C:\Users\Karans\Dropbox\CSD\Kurslar\Java-May-2020\src\Sample\src\org\csystem\app\samples\copyfilewithblock" />
-      <recent name="C:\Users\Karans\Dropbox\CSD\Kurslar\Java-May-2020\src\Sample\src" />
+      <recent name="C:\Users\Karans\Dropbox\CSD\Kurslar\Java-Sep-2020\src\Sample\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.csystem.app.App" />
       <module name="Sample" />
@@ -61,184 +57,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CardTestApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.csystem.app.samples.games.cardgames.CardTestApp" />
-      <module name="Sample" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.csystem.app.samples.games.cardgames.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="Application.App" />
-      <item itemvalue="Application.CardTestApp" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.App" />
-        <item itemvalue="Application.CardTestApp" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e7f4d8c7-9bdc-4f5f-bf13-4eea41abf3e3" name="Default Changelist" comment="" />
-      <created>1595766827565</created>
+      <changelist id="16698ff9-77fa-4dc3-9930-a2895ddac1e9" name="Default Changelist" comment="" />
+      <created>1612227057588</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1595766827565</updated>
-      <workItem from="1596880989240" duration="12169000" />
-      <workItem from="1596967450469" duration="12300000" />
-      <workItem from="1597165401426" duration="9000" />
-      <workItem from="1597485867248" duration="11694000" />
-      <workItem from="1597572215812" duration="14908000" />
-      <workItem from="1598090553526" duration="12940000" />
-      <workItem from="1598164688574" duration="762000" />
-      <workItem from="1598177018270" duration="12339000" />
-      <workItem from="1598695420870" duration="12687000" />
-      <workItem from="1599300171348" duration="14350000" />
-      <workItem from="1599386652148" duration="12167000" />
-      <workItem from="1599575475549" duration="157000" />
-      <workItem from="1599904958702" duration="13108000" />
-      <workItem from="1599989028749" duration="12172000" />
-      <workItem from="1600265642232" duration="126000" />
-      <workItem from="1600282719168" duration="9000" />
-      <workItem from="1600283776600" duration="1691000" />
-      <workItem from="1600509756717" duration="12838000" />
-      <workItem from="1600581724035" duration="26000" />
-      <workItem from="1600592133863" duration="13042000" />
-      <workItem from="1600618876715" duration="26000" />
-      <workItem from="1600878633561" duration="17000" />
-      <workItem from="1601114556420" duration="12986000" />
-      <workItem from="1601144246624" duration="38000" />
-      <workItem from="1601199329197" duration="12067000" />
-      <workItem from="1601213413794" duration="144000" />
-      <workItem from="1601717548855" duration="13061000" />
-      <workItem from="1601747891703" duration="623000" />
-      <workItem from="1601791610288" duration="15000" />
-      <workItem from="1601799879940" duration="26000" />
-      <workItem from="1601803478670" duration="13518000" />
-      <workItem from="1602051206637" duration="45000" />
-      <workItem from="1602324073574" duration="12582000" />
-      <workItem from="1602353086422" duration="19000" />
-      <workItem from="1602410426579" duration="12345000" />
-      <workItem from="1602695020087" duration="26000" />
-      <workItem from="1602929162701" duration="13433000" />
-      <workItem from="1602960180026" duration="119000" />
-      <workItem from="1602961012620" duration="35000" />
-      <workItem from="1602962780887" duration="15000" />
-      <workItem from="1603015443841" duration="14106000" />
-      <workItem from="1603127879228" duration="6000" />
-      <workItem from="1603300228094" duration="1165000" />
-      <workItem from="1603402570309" duration="1264000" />
-      <workItem from="1603492715953" duration="212000" />
-      <workItem from="1603533748703" duration="12167000" />
-      <workItem from="1603547425827" duration="510000" />
-      <workItem from="1603605820411" duration="9000" />
-      <workItem from="1603617995013" duration="12244000" />
-      <workItem from="1603633214007" duration="454000" />
-      <workItem from="1603721647762" duration="37000" />
-      <workItem from="1603750936050" duration="340000" />
-      <workItem from="1603751562200" duration="613000" />
-      <workItem from="1603834257391" duration="1351000" />
-      <workItem from="1603835795600" duration="267000" />
-      <workItem from="1603840125162" duration="855000" />
-      <workItem from="1603869515074" duration="752000" />
-      <workItem from="1603884727777" duration="1744000" />
-      <workItem from="1603911017014" duration="4523000" />
-      <workItem from="1603918227996" duration="654000" />
-      <workItem from="1603978565152" duration="5915000" />
-      <workItem from="1603986253532" duration="1568000" />
-      <workItem from="1604138552050" duration="13422000" />
-      <workItem from="1604167979563" duration="115000" />
-      <workItem from="1604225093953" duration="13632000" />
-      <workItem from="1604254909902" duration="628000" />
-      <workItem from="1604340517492" duration="202000" />
-      <workItem from="1604341071547" duration="4673000" />
-      <workItem from="1604349980391" duration="2521000" />
-      <workItem from="1604615424263" duration="536000" />
-      <workItem from="1604680963108" duration="694000" />
-      <workItem from="1604699205020" duration="269000" />
-      <workItem from="1604741531737" duration="14800000" />
-      <workItem from="1604757609651" duration="53000" />
-      <workItem from="1604775039292" duration="806000" />
-      <workItem from="1604839419157" duration="11000" />
-      <workItem from="1605040912869" duration="17000" />
-      <workItem from="1605977411337" duration="97000" />
-      <workItem from="1605977693370" duration="43000" />
-      <workItem from="1605978399074" duration="643000" />
+      <updated>1612227057588</updated>
+      <workItem from="1612227058818" duration="116000" />
+      <workItem from="1612553371080" duration="53000" />
+      <workItem from="1612619691652" duration="12705000" />
+      <workItem from="1612696520240" duration="66000" />
+      <workItem from="1612705745383" duration="13896000" />
+      <workItem from="1612977081816" duration="14000" />
+      <workItem from="1613117882730" duration="693000" />
+      <workItem from="1613133249750" duration="19000" />
+      <workItem from="1613223703063" duration="12810000" />
+      <workItem from="1613298592197" duration="7000" />
+      <workItem from="1613300434088" duration="79000" />
+      <workItem from="1613310318768" duration="340000" />
+      <workItem from="1613815522608" duration="286000" />
+      <workItem from="1613828550185" duration="14097000" />
+      <workItem from="1613846067053" duration="39000" />
+      <workItem from="1613855412318" duration="613000" />
+      <workItem from="1613916242039" duration="13348000" />
+      <workItem from="1614021904206" duration="19000" />
+      <workItem from="1614172978278" duration="608000" />
+      <workItem from="1614205258262" duration="265000" />
+      <workItem from="1614271095312" duration="36000" />
+      <workItem from="1614951558028" duration="41000" />
+      <workItem from="1615011127394" duration="11983000" />
+      <workItem from="1615039303382" duration="94000" />
+      <workItem from="1615096202846" duration="128000" />
+      <workItem from="1615561554063" duration="303000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="440" y="94" key="#Project_Structure" timestamp="1603019523052">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1603019523052" />
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604140567796">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="174" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604140567796" />
-    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser" timestamp="1604755893645">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="765" y="220" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1604755893645" />
-    <state x="1" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604751985253">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="1" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1604751985253" />
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1602335480669">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="690" y="266" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1602335480669" />
-    <state x="610" y="136" width="650" height="491" key="FileChooserDialogImpl" timestamp="1605979047215">
-      <screen x="0" y="0" width="1600" height="860" />
-    </state>
-    <state x="610" y="136" key="FileChooserDialogImpl/0.0.1600.860/-1920.0.1920.1040@0.0.1600.860" timestamp="1605979047215" />
-    <state x="732" y="165" width="650" height="491" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1604775064045" />
-    <state width="1877" height="233" key="GridCell.Tab.0.bottom" timestamp="1604757565703">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="233" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604757565703" />
-    <state width="1877" height="233" key="GridCell.Tab.0.center" timestamp="1604757565703">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="233" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604757565703" />
-    <state width="1877" height="233" key="GridCell.Tab.0.left" timestamp="1604757565702">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="233" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604757565702" />
-    <state width="1877" height="233" key="GridCell.Tab.0.right" timestamp="1604757565703">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="233" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604757565703" />
-    <state x="540" y="262" key="IDE.errors.dialog" timestamp="1598105109303">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="540" y="262" key="IDE.errors.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1598105109303" />
-    <state x="342" y="140" key="new project wizard" timestamp="1599329921602">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="342" y="140" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1599329921602" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1602418280998">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602418280998" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1602929483437">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1602929483437" />
   </component>
 </project>

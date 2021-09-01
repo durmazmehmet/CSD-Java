@@ -3,8 +3,16 @@
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
-public final class IntValue {
-    private static final IntValue[] CACHE = new IntValue[256];
+public class IntValue {
+    private static final IntValue [] CACHE;
+
+    static {
+        CACHE = new IntValue[256];
+        ZERO = of(0);
+        ONE = of(1);
+        TEN = of(10);
+    }
+
     private final int m_val;
 
     private IntValue(int val)
@@ -12,12 +20,13 @@ public final class IntValue {
         m_val = val;
     }
 
-    public static final IntValue ZERO = of(0);
-    public static final IntValue ONE = of(1);
+    public static final IntValue ZERO;
+    public static final IntValue ONE;
+    public static final IntValue TEN;
 
     public static IntValue of(int val)
     {
-        if (val < -128 || val > 127)
+        if (val < -128  || val > 127)
             return new IntValue(val);
 
         if (CACHE[val + 128] == null)
@@ -31,19 +40,24 @@ public final class IntValue {
         return m_val;
     }
 
-    public int compareTo(IntValue other)
-    {
-        return m_val - other.m_val;
-    }
-
     public IntValue add(int val)
     {
-        return of(m_val + val);
+        return IntValue.of(m_val + val);
     }
 
     public IntValue add(IntValue intValue)
     {
         return add(intValue.m_val);
+    }
+
+    public IntValue multiply(int val)
+    {
+        return IntValue.of(m_val * val);
+    }
+
+    public IntValue multiply(IntValue intValue)
+    {
+        return multiply(intValue.m_val);
     }
 
     public IntValue subtract(int val)
@@ -56,14 +70,9 @@ public final class IntValue {
         return subtract(intValue.m_val);
     }
 
-    public IntValue multiply(int val)
+    public int compareTo(IntValue other)
     {
-        return of(m_val * val);
-    }
-
-    public IntValue mul(IntValue intValue)
-    {
-        return multiply(intValue.m_val);
+        return m_val - other.m_val;
     }
 
     public IntValue increment()
@@ -75,6 +84,7 @@ public final class IntValue {
     {
         return subtract(1);
     }
+
 
     public String toString()
     {

@@ -1,52 +1,59 @@
+/*----------------------------------------------------------------------------------------------------------------------
+    Lottary sınıfı
+----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.app.samples.lottaryapp;
 
 import java.util.Random;
 
 public class Lottary {
-    private Random m_rand;
+    private final Random m_random;
 
-    private int [] getColumn()
+    private static int [] getNumbers(boolean [] flags)
     {
-        int [] column = new int[6];
-        boolean [] status = getStatus();
-
+        int [] a = new int[6];
         int index = 0;
 
         for (int i = 1; i < 50; ++i)
-            if (status[i])
-                column[index++] = i;
+            if (flags[i])
+                a[index++] = i;
 
-        return column;
+        return a;
     }
 
-    private boolean [] getStatus()
+    private boolean [] getFlags()
     {
-        boolean [] status = new boolean[50];
-        int val;
+        boolean [] flags = new boolean[50];
 
         for (int i = 0; i < 6; ++i) {
+            int val;
+
             for (;;) {
-                val = m_rand.nextInt(49) + 1;
-                if (!status[val])
+                val = m_random.nextInt(49) + 1;
+                if (!flags[val])
                     break;
             }
-            status[val] = true;
+            flags[val] = true;
         }
-        return status;
+
+        return flags;
     }
 
     public Lottary()
     {
-        m_rand = new Random();
+        m_random = new Random();
     }
 
+    public int[] getNumbers()
+    {
+        return getNumbers(getFlags());
+    }
 
-    public int [][] getColumns(int n)
+    public int [][] getNumbers(int n)
     {
         int [][] c = new int[n][];
 
         for (int i = 0; i < n; ++i)
-            c[i] = getColumn();
+            c[i] = getNumbers();
 
         return c;
     }
