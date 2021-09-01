@@ -3,52 +3,38 @@
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math.geometry;
 
+import static java.lang.Math.PI;
+import static java.lang.Math.abs;
+
 public class Circle {
-    private double m_radius;
-    private double m_pi;
+    private double m_r;
 
     public Circle()
     {
     }
 
-    public Circle(double radius)
+    public Circle(double r)
     {
-        this.setRadius(radius);
-    }
-
-    public Circle(double radius, double pi)
-    {
-        this.setRadius(radius, pi);
+        this.setRadius(r);
     }
 
     public double getRadius()
     {
-        return m_radius;
+        return m_r;
     }
 
-    public void setRadius(double radius)
+    public void setRadius(double r)
     {
-        this.setRadius(radius, Math.PI);
-    }
-
-    public void setRadius(double radius, double pi)
-    {
-        m_radius = Math.abs(radius);
-        this.setPI(pi);
+        m_r = abs(r);
     }
 
     public double getArea()
     {
-        return m_pi * m_radius * m_radius;
+        return PI * m_r * m_r;
     }
 
     public double getCircumference()
     {
-        return 2 * m_pi * m_radius;
-    }
-
-    public final void setPI(double pi)
-    {
-        m_pi = Math.abs(pi); //Kolaylık için mutlak değer aldık
+        return 2 * PI * m_r;
     }
 }

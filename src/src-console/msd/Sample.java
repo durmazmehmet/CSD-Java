@@ -1,11 +1,8 @@
-/*----------------------------------------------------------------------------------------------------------------------
-	
-----------------------------------------------------------------------------------------------------------------------*/
-package msd.util;
+package msd;
 
 public class Sample {
-    public static void main(String [] args) 
+	public static void main(String [] args)
 	{
-		System.out.println("Merhaba ben Sample.main");
+		System.out.println("Merhaba ben Sample");
 	}
 }

@@ -1,27 +1,16 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    Fraction sınıfı ve test kodu
+    Console sınıfı
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.app;
 
-import org.csystem.util.Console;
-import org.csystem.util.math.Fraction;
-import org.csystem.util.math.FractionException;
+import org.csystem.util.console.Console;
 
 class App {
     public static void main(String [] args)
     {
-        for (;;) {
-            try {
-                int a = Console.readInt("Pay değerini giriniz:");
-                int b = Console.readInt("Payda değerini giriniz:");
-                Fraction f = new Fraction(a, b);
+        double a = Console.readDouble("Birinci sayıyı giriniz:", "Hatalı giriş yaptınız:");
+        double b = Console.readDouble("İkinci sayıyı giriniz:", "Hatalı giriş yaptınız:");
 
-                System.out.println(f);
-            }
-            catch (FractionException ex) {
-                System.out.println(ex.getMessage());
-            }
-        }
+        System.out.printf("%f + %f = %f%n", a, b, a + b);
     }
 }
-

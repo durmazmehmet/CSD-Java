@@ -4,15 +4,16 @@
 package org.csystem.math.geometry;
 
 import static java.lang.Math.sqrt;
+import static java.lang.String.format;
 
 public class Point {
 	public int x;
 	public int y;
 
-	Point(Point point)
+	Point(Point other)
 	{
-		x = point.x;
-		y = point.y;
+		x = other.x;
+		y = other.y;
 	}
 
 	public Point()
@@ -32,22 +33,17 @@ public class Point {
 	
 	public double distance()
 	{
-		return distance(0);
-	}
-
-	public double distance(Point p)
-	{
-		return this.distance(p.x, p.y);
+		return this.distance(0, 0);
 	}
 	
-	public double distance(int a)
+	public double distance(Point other)
 	{
-		return distance(a, 0);
+		return this.distance(other.x, other.y);
 	}
-
-	public double distance(int a, int b)
+	
+	public double distance(int x, int y)
 	{
-		return sqrt((x - a) * (x - a) + (y - b) * (y - b));								
+		return sqrt((this.x - x) * (this.x - x) + (this.y - y) * (this.y - y));
 	}
 	
 	public void offset(int dxy)
@@ -63,6 +59,6 @@ public class Point {
 	
 	public String toString()
 	{
-		return String.format("{x: %d, y: %d}", x, y);
-	}	
+		return format("{x: %d, y: %d}", x, y);
+	}
 }

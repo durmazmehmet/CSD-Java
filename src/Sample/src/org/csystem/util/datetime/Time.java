@@ -1,9 +1,10 @@
 /*----------------------------------------------------------------------------------------------------------------------
-	Time sınıfı
+    Time sınıfı
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util.datetime;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class Time {
@@ -12,14 +13,15 @@ public class Time {
     private int m_second;
     private int m_millisecond;
 
-    private static void doWorkForException(String message)
+    private static void doWorkException(String message)
     {
-        throw new DateTimeException(message);
+        System.out.println(message);
+        System.exit(1); //exception işlemlerine kadar sabredin
     }
 
-    private static boolean isValidForBound(int val, int max)
+    private static boolean isValidForBound(int val, int bound)
     {
-        return 0 <= val && val <= max;
+        return 0 <= val && val <= bound;
     }
 
     private static boolean isValidForHour(int val)
@@ -44,53 +46,67 @@ public class Time {
 
     private static boolean isValidForTime(int hour, int minute, int second, int millisecond)
     {
-        return isValidForHour(hour) && isValidForMinute(minute) &&
-                isValidForSecond(second) && isValidForMillisecond(millisecond);
+        return isValidForHour(hour) && isValidForMinute(minute) && isValidForSecond(second)
+                && isValidForMillisecond(millisecond);
     }
 
     private static void checkForHour(int val)
     {
         if (!isValidForHour(val))
-            doWorkForException("Invalid hour value:" + val);
+            doWorkException("Invalid hour value:" + val);
     }
 
     private static void checkForMinute(int val)
     {
         if (!isValidForMinute(val))
-            doWorkForException("Invalid minute value:" + val);
+            doWorkException("Invalid minute value:" + val);
     }
 
     private static void checkForSecond(int val)
     {
         if (!isValidForSecond(val))
-            doWorkForException("Invalid second value:" + val);
+            doWorkException("Invalid second value:" + val);
     }
 
     private static void checkForMillisecond(int val)
     {
         if (!isValidForMillisecond(val))
-            doWorkForException("Invalid millisecond value value:" + val);
+            doWorkException("Invalid millisecond value:" + val);
     }
 
     private static void checkForTime(int hour, int minute, int second, int millisecond)
     {
         if (!isValidForTime(hour, minute, second, millisecond))
-            doWorkForException(String.format("Invalid time values:all values -> %d, %d, %d, %d", hour, minute, second, millisecond));
+            doWorkException(String.format("Invalid time value(s): h-> %d, m -> %d, s-> %d, ms -> %d",
+                    hour, minute, second, millisecond));
     }
 
-    public static Time of()
+    private void set(int hour, int minute, int second, int millisecond)
     {
-        return of(new Random());
+        m_hour = hour;
+        m_minute = minute;
+        m_second = second;
+        m_millisecond = millisecond;
     }
 
-    public static Time of(Random r)
+    public static Time ofRandom()
+    {
+        return ofRandom(new Random());
+    }
+
+    public static Time ofRandom(Random r)
     {
         return new Time(r.nextInt(24), r.nextInt(60), r.nextInt(60), r.nextInt(1000));
     }
 
-    public Time() //Burada yazılanların bilinmesi gerekmez. Sadece default ctor'un anlamı olarak yazılmıştır
+    Time(Time time)
     {
-        Calendar now = Calendar.getInstance();
+       set(time.m_hour, time.m_minute, time.m_second, time.m_millisecond);
+    }
+
+    public Time() //Bu ctor o anki sistem zamanını alır. Burada yazılan kodların ne anlama geldiği şu an önemsizdir. Tasarım açısından bu ctor yazılmıştır
+    {
+        Calendar now = new GregorianCalendar();
 
         m_hour = now.get(Calendar.HOUR_OF_DAY);
         m_minute = now.get(Calendar.MINUTE);
@@ -111,10 +127,7 @@ public class Time {
     public Time(int hour, int minute, int second, int millisecond)
     {
         checkForTime(hour, minute, second, millisecond);
-        m_hour = hour;
-        m_minute = minute;
-        m_second = second;
-        m_millisecond = millisecond;
+        this.set(hour, minute, second, millisecond);
     }
 
     public int getHour()
@@ -124,7 +137,7 @@ public class Time {
 
     public void setHour(int hour)
     {
-        if (hour == m_hour)
+        if (m_hour == hour)
             return;
 
         checkForHour(hour);
@@ -138,7 +151,7 @@ public class Time {
 
     public void setMinute(int minute)
     {
-        if (minute == m_minute)
+        if (m_minute == minute)
             return;
 
         checkForMinute(minute);
@@ -152,7 +165,7 @@ public class Time {
 
     public void setSecond(int second)
     {
-        if (second == m_second)
+        if (m_second == second)
             return;
 
         checkForSecond(second);
@@ -166,25 +179,25 @@ public class Time {
 
     public void setMillisecond(int millisecond)
     {
-        if (millisecond == m_millisecond)
+        if (m_millisecond == millisecond)
             return;
 
         checkForMillisecond(millisecond);
         m_millisecond = millisecond;
     }
 
-    public String toLongTimeString()
+    public String toShortTimeString()
     {
-        return String.format("%s.%03d", toString(), m_millisecond);
+        return String.format("%02d:%02d", m_hour, m_minute);
     }
 
     public String toString()
     {
-        return String.format("%s:%02d", toShortTimeString(), m_second);
+        return String.format("%s:%02d", this.toShortTimeString(), m_second);
     }
 
-    public String toShortTimeString()
+    public String toLongTimeString()
     {
-        return String.format("%02d:%02d", m_hour, m_minute);
+        return String.format("%s.%03d", toString(), m_millisecond);
     }
 }

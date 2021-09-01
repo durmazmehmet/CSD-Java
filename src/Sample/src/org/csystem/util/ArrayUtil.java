@@ -10,7 +10,7 @@ public final class ArrayUtil {
     {
         for (int i = 0; i < a.length - 1; ++i)
             for (int k = 0; k < a.length - 1 - i; ++k)
-                if (a[k + 1] < a[k])
+                if (a[k] > a[k + 1])
                     swap(a, k, k + 1);
     }
 
@@ -18,24 +18,21 @@ public final class ArrayUtil {
     {
         for (int i = 0; i < a.length - 1; ++i)
             for (int k = 0; k < a.length - 1 - i; ++k)
-                if (a[k + 1] > a[k])
+                if (a[k] < a[k + 1])
                     swap(a, k, k + 1);
     }
 
     private static void selectionSortAscending(int [] a)
     {
-        int min, minIndex;
-
         for (int i = 0; i < a.length - 1; ++i) {
-            min = a[i];
-            minIndex = i;
+            int min = a[i];
+            int minIndex = i;
 
             for (int k = i + 1; k < a.length; ++k)
                 if (a[k] < min) {
                     min = a[k];
                     minIndex = k;
                 }
-
             a[minIndex] = a[i];
             a[i] = min;
         }
@@ -43,18 +40,15 @@ public final class ArrayUtil {
 
     private static void selectionSortDescending(int [] a)
     {
-        int max, maxIndex;
-
         for (int i = 0; i < a.length - 1; ++i) {
-            max = a[i];
-            maxIndex = i;
+            int max = a[i];
+            int maxIndex = i;
 
             for (int k = i + 1; k < a.length; ++k)
                 if (a[k] > max) {
                     max = a[k];
                     maxIndex = k;
                 }
-
             a[maxIndex] = a[i];
             a[i] = max;
         }
@@ -64,9 +58,20 @@ public final class ArrayUtil {
     {
     }
 
-    public static void bubbleSort(int [] a, boolean descending)
+    public static void addBy(int [] a, int val)
     {
-        if (descending)
+        for (int i = 0; i < a.length; ++i)
+            a[i] += val;
+    }
+
+    public static double average(int [] a)
+    {
+        return (double)sum(a) / a.length;
+    }
+
+    public static void bubbleSort(int [] a, boolean desc)
+    {
+        if (desc)
             bubbleSortDescending(a);
         else
             bubbleSortAscending(a);
@@ -74,23 +79,28 @@ public final class ArrayUtil {
 
     public static void bubbleSort(int [] a)
     {
-        bubbleSort(a, false);
+        bubbleSortAscending(a);
     }
 
 
-    public static int [] copyOf(int [] a, int newLength)
+    public static int [] copyOf(int [] a, int newSize)
     {
-        int [] r = new int[newLength];
+        int [] r = new int[newSize];
 
-        int length = Math.min(a.length, newLength);
+        int count = Math.min(a.length, newSize);
 
-        for (int i = 0; i < length; ++i)
+        for (int i = 0; i < count; ++i)
             r[i] = a[i];
 
         return r;
     }
 
     public static void display(int [] a)
+    {
+        display(1, a);
+    }
+
+    public static void display(int [][] a)
     {
         display(1, a);
     }
@@ -111,25 +121,14 @@ public final class ArrayUtil {
             display(n, array);
     }
 
-    public static void display(String [] str)
+    public static void drawHistogram(int [] data, int count, char ch)
     {
-        display('\n', str);
-    }
-
-    public static void display(char sep, String [] str)
-    {
-        for (String s : str)
-            System.out.printf("%s%c", s, sep);
-    }
-
-    public static void drawHistogram(int [] data, int n, char ch)
-    {
-        int mavValue = max(data);
+        int maxVal = max(data);
 
         for (int val : data) {
-            int count = (int)Math.ceil((double)val * n / mavValue);
+            int n = (int)Math.ceil(val * count / (double)maxVal);
 
-            while (count -- > 0)
+            while (n-- > 0)
                 System.out.print(ch);
 
             System.out.println();
@@ -147,12 +146,34 @@ public final class ArrayUtil {
             a[i] = r.nextInt(max - min) + min;
     }
 
-    public static int [] generateRandomArray(int n, int min, int max) //[min, max)
+    public static void fillRandomArray(int [][] a, int min, int max) //[min, max)
     {
-        return generateRandomArray(new Random(), n, min, max);
+        fillRandomArray(new Random(), a, min, max);
     }
 
-    public static int [] generateRandomArray(Random r, int n, int min, int max) //[min, max)
+    public static void fillRandomArray(Random r, int [][] a, int min, int max) //[min, max)
+    {
+        for (int i = 0; i < a.length; ++i)
+            for (int k = 0; k < a[i].length; ++k)
+                a[i][k] = r.nextInt(max - min) + min;
+    }
+
+    public static int [] getHistogramData(int [] a, int n) //[0, n]
+    {
+        int [] counts = new int[n + 1];
+
+        for (int val : a)
+            ++counts[val];
+
+        return counts;
+    }
+
+    public static int [] getRandomArray(int n, int min, int max) //[min, max)
+    {
+        return getRandomArray(new Random(), n, min, max);
+    }
+
+    public static int [] getRandomArray(Random r, int n, int min, int max) //[min, max)
     {
         int [] a = new int[n];
 
@@ -161,45 +182,36 @@ public final class ArrayUtil {
         return a;
     }
 
-    public static int [][] generateRandomMatrix(int row, int col, int min, int max)
+    public static int [][] getRandomMatrix(int m, int n, int min, int max) //[min, max)
     {
-        return generateRandomMatrix(new Random(), row, col, min, max);
+        return getRandomMatrix(new Random(), m, n, min, max);
     }
 
-    public static int [][] generateRandomMatrix(Random r, int row, int col, int min, int max)
+    public static int [][] getRandomMatrix(Random r, int m, int n, int min, int max) //[min, max)
     {
-        int [][] m = new int[row][];
+        int [][] result = new int[m][n];
 
-        for (int i = 0; i < row; ++i)
-            m[i] = generateRandomArray(r, col, min, max);
+        fillRandomArray(r, result, min, max);
 
-        return m;
+        return result;
     }
 
-    public static int [][] generateRandomSquareMatrix(int n, int min, int max)
+    public static int [][] getRandomSquareMatrix(int m, int min, int max) //[min, max)
     {
-        return generateRandomSquareMatrix(new Random(), n, min, max);
+        return getRandomSquareMatrix(new Random(), m, min, max);
     }
 
-    public static int [][] generateRandomSquareMatrix(Random r, int n, int min, int max)
+    public static int [][] getRandomSquareMatrix(Random r, int m, int min, int max) //[min, max)
     {
-        return generateRandomMatrix(r, n, n, min, max);
-    }
-
-    public static int [] getHistogramData(int [] a, int n) //[0, n]
-    {
-        int [] data = new int[n + 1];
-
-        for (int val : a)
-            ++data[val];
-
-        return data;
+        return getRandomMatrix(r, m, m, min, max);
     }
 
     public static boolean isMatrix(int [][] a)
     {
+        int n = a[0].length;
+
         for (int i = 1; i < a.length; ++i)
-            if (a[i].length != a[0].length)
+            if (a[i].length != n)
                 return false;
 
         return true;
@@ -210,26 +222,32 @@ public final class ArrayUtil {
         return isMatrix(a) && a.length == a[0].length;
     }
 
-    public static int max(int [] a)
-    {
-        int result = a[0];
-
-        for (int i = 1; i < a.length; ++i)
-            if (result < a[i])
-                result = a[i];
-
-        return result;
-    }
-
     public static int min(int [] a)
     {
-        int result = a[0];
+        int minVal = a[0];
 
         for (int i = 1; i < a.length; ++i)
-            if (result > a[i])
-                result = a[i];
+            if (a[i] < minVal)
+                minVal = a[i];
 
-        return result;
+        return minVal;
+    }
+
+    public static int max(int [] a)
+    {
+        int maxVal = a[0];
+
+        for (int i = 1; i < a.length; ++i)
+            if (a[i] > maxVal)
+                maxVal = a[i];
+
+        return maxVal;
+    }
+
+    public static void multiplyBy(int [] a, int val)
+    {
+        for (int i = 0; i < a.length; ++i)
+            a[i] *= val;
     }
 
     public static int partition(int [] a, int threshold)
@@ -251,10 +269,10 @@ public final class ArrayUtil {
 
     public static void reverse(int [] a)
     {
-        int halfLength = a.length / 2;
+         int halfLength = a.length / 2;
 
-        for (int i = 0; i < halfLength; ++i)
-            swap(a, i, a.length - 1 - i);
+         for (int i = 0; i < halfLength; ++i)
+             swap(a, i, a.length - 1 - i);
     }
 
     public static void reverse(char [] a)
@@ -265,9 +283,9 @@ public final class ArrayUtil {
             swap(a, i, a.length - 1 - i);
     }
 
-    public static void selectionSort(int [] a, boolean descending)
+    public static void selectionSort(int [] a, boolean desc)
     {
-        if (descending)
+        if (desc)
             selectionSortDescending(a);
         else
             selectionSortAscending(a);
@@ -275,52 +293,12 @@ public final class ArrayUtil {
 
     public static void selectionSort(int [] a)
     {
-        selectionSort(a, false);
-    }
-
-    public static int sum(int [] a)
-    {
-        int total = 0;
-
-        for (int val : a)
-            total += val;
-
-        return total;
-    }
-
-
-    public static int sum(int [][] a)
-    {
-        int total = 0;
-
-        for (int[] array : a)
-            total += sum(array);
-
-        return total;
-    }
-
-    public static int sumDiagonal(int [][] a)
-    {
-        int total = 0;
-
-        for (int i = 0; i < a.length; ++i)
-            total += a[i][i];
-
-        return total;
+        selectionSortAscending(a);
     }
 
     public static void swap(int [] a, int i, int k)
     {
         int temp;
-
-        temp = a[i];
-        a[i] = a[k];
-        a[k] = temp;
-    }
-
-    public static void swap(double [] a, int i, int k)
-    {
-        double temp;
 
         temp = a[i];
         a[i] = a[k];
@@ -336,14 +314,42 @@ public final class ArrayUtil {
         a[k] = temp;
     }
 
+    public static int sum(int [] a)
+    {
+        int total = 0;
+
+        for (int val : a)
+            total += val;
+
+        return total;
+    }
+
+    public static int sum(int [][] a)
+    {
+        int total = 0;
+
+        for (int [] array : a)
+            total += sum(array);
+
+        return total;
+    }
+
+    public static int sumDiagonal(int [][] a)
+    {
+        int total = 0;
+
+        for (int i = 0; i < a.length; ++i)
+            total += a[i][i];
+
+        return total;
+    }
+
     public static int [][] transpose(int [][] a)
     {
-        int row = a.length;
-        int col = a[0].length;
-        int [][] t = new int[col][row];
+        int [][] t = new int[a[0].length][a.length];
 
-        for (int i = 0; i < row; ++i)
-            for (int j = 0; j < col; ++j)
+        for (int i = 0; i < a.length; ++i)
+            for (int j = 0; j < a[i].length; ++j)
                 t[j][i] = a[i][j];
 
         return t;
