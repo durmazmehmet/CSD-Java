@@ -3,9 +3,9 @@ package org.csystem.app.samples.companyapp;
 public class SalesManager extends Manager {
     private double m_extra;
 
-    public SalesManager(String citizenId, String name, boolean married, String department, double salary, double extra)
+    public SalesManager(String citizenId, String name, String address, double salary, String department, double extra)
     {
-        super(citizenId, name, married, department, salary);
+        super(citizenId, name, address, salary, department);
         m_extra = extra;
     }
 
@@ -18,6 +18,7 @@ public class SalesManager extends Manager {
     {
         m_extra = extra;
     }
+
     public double calculatePayment()
     {
         return super.calculatePayment() + m_extra;

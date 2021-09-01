@@ -1,11 +1,11 @@
 package org.csystem.app.samples.companyapp;
 
 public class HumanResources {
-    //...
-    public void payInsurance(Employee e)
+    public void payInsurance(Employee employee)
     {
-        System.out.printf("Citizen Id:%s%n", e.getCitizenId());
-        System.out.printf("Name:%s%n", e.getName());
-        System.out.printf("Payment:%f%n", e.calculatePayment());
+        System.out.printf("CitizenId:%s%n", employee.getCitizenId());
+        System.out.printf("Name:%s%n", employee.getName());
+        System.out.printf("Payment:%f%n", employee.calculatePayment());
     }
+    //...
 }

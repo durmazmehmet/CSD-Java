@@ -1,9 +1,9 @@
-﻿Link			: https://www.dropbox.com/sh/gdm66fjrzml32yj/AADarb7u63ZqrCF4_4CUFg4Ma?dl=0
-Kısa Link		: http://bit.do/java-aug-2019
-Tüm Kurslar		: https://goo.gl/qx15DM
+Link			: https://www.dropbox.com/sh/5dq0resiwfnvaja/AADmlQglyqDg3bgIovwiP-Fra?dl=0
+Kısa link		: 
+
 
 
 İletişim Bilgileri:
 Oğuz Karan
 Email			: oguzkaran@csystem.org 
-Tel			    : 05325158012
+Tel				: 05325158012

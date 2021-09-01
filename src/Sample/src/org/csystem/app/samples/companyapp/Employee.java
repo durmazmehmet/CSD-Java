@@ -3,14 +3,15 @@ package org.csystem.app.samples.companyapp;
 public abstract class Employee {
     private String m_citizenId;
     private String m_name;
-    private boolean m_married;
+    private String m_address;
+    //...
 
-    public Employee(String citizenId, String name, boolean married)
+    protected Employee(String citizenId, String name, String address)
     {
         //...
         m_citizenId = citizenId;
         m_name = name;
-        m_married = married;
+        m_address = address;
     }
 
     public String getCitizenId()
@@ -33,15 +34,16 @@ public abstract class Employee {
         m_name = name;
     }
 
-    public boolean isMarried()
+    public String getAddress()
     {
-        return m_married;
+        return m_address;
     }
 
-    public void setMarried(boolean married)
+    public void setAddress(String address)
     {
-        m_married = married;
+        m_address = address;
     }
 
     public abstract double calculatePayment();
+    //...
 }

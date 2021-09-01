@@ -1,14 +1,12 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    Complex sınıfı
+	Complex sınıfı
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math;
 
-public final class Complex {
-	public double re, im;
-		
+public class Complex {
 	private static Complex add(double re1, double im1, double re2, double im2)
 	{
-		return new Complex(re1 + re2, im1 + im2);	
+		return new Complex(re1 + re2, im1 + im2);
 	}
 	
 	private static Complex subtract(double re1, double im1, double re2, double im2)
@@ -16,23 +14,17 @@ public final class Complex {
 		return add(re1, im1, -re2, -im2);
 	}
 	
-	private static Complex multiply(double re1, double im1, double re2, double im2)
-	{
-		return new Complex(re1 * re2 - im1 * im2, re1 * im2 + im1 * re2);
-	}
-	
-	private static Complex devide(double re1, double im1, double re2, double im2)
-	{
-		//TODO: Do your homework
-		return multiply(re1, im1, re2, im2);
-	}
+	public double re;
+	public double im;
 	
 	public Complex()
-	{}
+	{
+		
+	}
 	
 	public Complex(double re)
 	{
-		this(re, 0);
+		this.re = re;
 	}
 	
 	public Complex(double re, double im)
@@ -43,7 +35,12 @@ public final class Complex {
 	
 	public Complex getConjugate()
 	{
-		return new Complex(re, -im);		
+		Complex z = new Complex();
+		
+		z.re = re;
+		z.im = -im;
+		
+		return z;
 	}
 	
 	public double getNorm()
@@ -51,63 +48,52 @@ public final class Complex {
 		return Math.sqrt(re * re + im * im);
 	}
 	
-	public void dec()
+	//add
+	public static Complex add(double a, Complex z)
 	{
-		--re;
-	}
-	
-	public void inc()
-	{
-		++re;
+		return add(a, 0, z.re, z.im);				
 	}
 	
 	public Complex add(Complex z)
 	{
-		return add(re, im, z.re, z.im);				
-	}
-	
-	public Complex add(double a, double b)
-	{
-		return add(re, im, a, b);
+		return add(re, im, z.re, z.im);
 	}
 	
 	public Complex add(double a)
 	{
-		return add(a, 0);
-	}	
+		return add(re, im, a, 0);		
+	}
+	
+	//subtract
+	public static Complex subtract(double a, Complex z)
+	{
+		return subtract(a, 0, z.re, z.im);				
+	}
 	
 	public Complex subtract(Complex z)
 	{
-		return subtract(re, im, z.re, z.im);				
-	}
-	
-	public Complex subtract(double a, double b)
-	{
-		return subtract(re, im, a, b);
+		return subtract(re, im, z.re, z.im);
 	}
 	
 	public Complex subtract(double a)
 	{
-		return subtract(a, 0);
+		return subtract(re, im, a, 0);		
+	}
+	
+	public void offset(double dxy)
+	{
+		this.offset(dxy, dxy);
 	}	
 	
-	public Complex multiply(Complex z)
+	public void offset(double dx, double dy)
 	{
-		return multiply(re, im, z.re, z.im);				
-	}
-	
-	public Complex multiply(double a, double b)
-	{
-		return multiply(re, im, a, b);
-	}
-	
-	public Complex multiply(double a)
-	{
-		return multiply(a, 0);
+		re += dx;
+		im += dy;
 	}
 	
 	public String toString()
 	{
-		return String.format("|%.2f + %.2fi| = %f", re, im, getNorm());
+		return String.format("|%.2f + %.2f * i| = %f", re, im, this.getNorm());
 	}
 }
+

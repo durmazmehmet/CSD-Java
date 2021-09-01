@@ -1,49 +1,63 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    Console sınıfı
+	Console sınıfı
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.util;
 
 import java.util.Scanner;
 
 public final class Console {
-    private static final Scanner ms_kb;
+    private static final Scanner KB;
 
     static {
-        ms_kb = new Scanner(System.in);
+        KB = new Scanner(System.in);
     }
-    private Console() {}
+
+    private Console()
+    {
+    }
+
+    public static int readIntLine(String message)
+    {
+        return readInt(message + "\n");
+    }
+
+    public static int readIntLine(String message, String errorMessage)
+    {
+        return readInt(message + "\n", errorMessage + "\n");
+    }
 
     public static int readInt()
     {
         return readInt("");
     }
 
-    public static int readInt(String msg)
+    public static int readInt(String message)
     {
-        return readInt(msg, "");
+        return readInt(message, "");
     }
-    public static int readInt(String msg, String errMsg)
+
+    public static int readInt(String message, String errorMessage)
     {
         for (;;) {
             try {
-                System.out.print(msg);
-                int val = Integer.parseInt(ms_kb.nextLine());
+                System.out.print(message);
 
-                return val;
+                return Integer.parseInt(KB.nextLine());
             }
-            catch (Throwable ex) {
-                System.out.print(errMsg);
+            catch (NumberFormatException ex) {
+                System.out.print(errorMessage);
             }
         }
     }
 
-    public static int readIntLine(String msg)
+    public static double readDoubleLine(String message)
     {
-        return readIntLine(msg, "");
+        return readDouble(message + "\n");
     }
-    public static int readIntLine(String msg, String errMsg)
+
+    public static double readDoubleLine(String message, String errorMessage)
     {
-        return readInt(msg + "\n", errMsg + "\n");
+        return readDouble(message + "\n", errorMessage + "\n");
     }
 
     public static double readDouble()
@@ -51,49 +65,29 @@ public final class Console {
         return readDouble("");
     }
 
-    public static double readDouble(String msg)
+    public static double readDouble(String message)
     {
-        return readDouble(msg, "");
+        return readDouble(message, "");
     }
-    public static double readDouble(String msg, String errMsg)
+
+    public static double readDouble(String message, String errorMessage)
     {
         for (;;) {
             try {
-                System.out.print(msg);
-                double val = Double.parseDouble(ms_kb.nextLine());
+                System.out.print(message);
 
-                return val;
+                return Double.parseDouble(KB.nextLine());
             }
-            catch (Throwable ex) {
-                System.out.print(errMsg);
+            catch (NumberFormatException ex) {
+                System.out.print(errorMessage);
             }
         }
     }
 
-    public static double readDoubleLine(String msg)
+    //...
+    public static void writeLine(String format, Object...objects)
     {
-        return readDoubleLine(msg, "");
+        System.out.printf(format + "\n", objects);
     }
-    public static double readDoubleLine(String msg, String errMsg)
-    {
-        return readDouble(msg + "\n", errMsg + "\n");
-    }
-
-    //////////////////////////////
-
-    public static void writeLine()
-    {
-        writeLine("");
-    }
-
-    public static void write(String fmt, Object...args)
-    {
-        System.out.printf(fmt, args);
-    }
-
-    public static void writeLine(String fmt, Object...args)
-    {
-        write(fmt + "\n", args);
-    }
-
+    //...
 }

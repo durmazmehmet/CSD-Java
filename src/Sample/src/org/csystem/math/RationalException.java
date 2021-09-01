@@ -1,20 +1,24 @@
 /*----------------------------------------------------------------------------------------------------------------------
-    RationalException sınıfı
+	RationalException sınıfı
 ----------------------------------------------------------------------------------------------------------------------*/
 package org.csystem.math;
 
 public class RationalException extends RuntimeException {
-    private RationalExceptionStatus m_rationalExceptionStatus;
+    private final RationalExceptionStatus m_rationalExceptionStatus;
 
-    public RationalException(String msg, RationalExceptionStatus rationalExceptionStatus)
+    public RationalException(String s, RationalExceptionStatus rationalExceptionStatus)
     {
-        super(msg);
+        super(s);
         m_rationalExceptionStatus = rationalExceptionStatus;
+    }
+
+    public RationalExceptionStatus getRationalExceptionStatus()
+    {
+        return m_rationalExceptionStatus;
     }
 
     public String getMessage()
     {
-        return String.format("Message:%s%s",
-                super.getMessage(), m_rationalExceptionStatus != null ? ", ExceptionStatus:%s" + m_rationalExceptionStatus : "");
+        return String.format("Mesage:%s, Exception Status:%s", super.getMessage(), m_rationalExceptionStatus);
     }
 }
